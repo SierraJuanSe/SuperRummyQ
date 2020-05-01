@@ -1,67 +1,69 @@
-
 <!DOCTYPE html>
 <html>
-<head>
-<title>RummyQ</title>
-<link rel="stylesheet" href="static/css/style.css">
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css"  media="screen,projection"/>
+<head>
+  <title>RummyQ</title>
+  <link rel="stylesheet" href="static/css/style.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css" media="screen,projection" />
 
 </head>
 
 <body class="font-cover" id="login">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- <img  style="position:absolute; width:400px; height:100px; top: 400px; left: 500px" src="boton.png" > -->
-   <!-- <input  id="Play" type="image" src="img\boton.png" style="position:absolute;width:400px;Height:100px; top: 400px; left: 500px;" 
-   onmouseover="this.opacity=0.1;" onmouseout="this.opacity=0.2;"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
+  <a style="position:absolute;width:260px;Height:90px; top: 400px; left: 560px;"
+    class="waves-effect waves-light btn modal-trigger grey darken-4" href="#modal1">
+    <br><i class="material-icons md-195">play_circle_outline</i></a>
 
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <div class="container" align:center>
+        <h4>Unirte a una partida</h4>
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="first_name2" type="text" class="validate">
+            <label class="active" for="first_name2">Nombre</label>
+          </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" id="unir" name="action">Unirse
+          <i class="material-icons right">add</i>
+        </button>
 
- <!-- Modal Trigger -->
- 
- <a style="position:absolute;width:260px;Height:90px; top: 400px; left: 560px;" class="waves-effect waves-light btn modal-trigger grey darken-4" href="#modal1">
-<br><i class="material-icons md-195">play_circle_outline</i></a>
+      </div>
+    </div>
 
- <!-- Modal Structure -->
- <div id="modal1" class="modal">
-   <div class="modal-content">
-   <div class="container">
-    <h4>Unirte a una partida</h4>
-    <div class="row">
-        <div class="input-field col s6">
-          <input id="first_name2" type="text" class="validate">
-          <label class="active" for="first_name2">Nombre</label>
+    <div class="preloader-wrapper big active" style="display: none;" id="Load">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
         </div>
       </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action">Unirse
-        <i class="material-icons right">add</i>
-      </button>
 
-   </div>
- </div>     
+    <script type="text/javascript" src="static/js/materialize.min.js"></script>
+    <script type="text/javascript" src="static/js/main.js"></script>
 
- <script type="text/javascript" src="static/js/materialize.min.js"></script>
+    <script>
 
-<script>
+$('.preloader-wrapper')
+		.delay(170)
+		.fadeOut();
 
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems, options);
-  });
+      $(document).ready(function () {
+        $('.modal').modal();
 
+      });
+      $(document).ready(function () {
+        M.updateTextFields();
+      });
 
-  $(document).ready(function(){
-    $('.modal').modal();
-  });
+    </script>
 
-  $(document).ready(function() {
-    M.updateTextFields();
-  });
-
-</script>
-   
 </body>
 
 </html>

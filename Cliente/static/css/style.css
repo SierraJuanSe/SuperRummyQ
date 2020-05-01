@@ -1,5 +1,11 @@
 #login{
     background-image: url(../images/Inicio1.png);
+  
+}
+#tablero{
+  background-image: url(../images/tablero.jpg);
+  border:20px solid black;
+  padding:298px;
 }
 
 .material-icons.md-195 { font-size: 78px; }
