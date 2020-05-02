@@ -2,24 +2,51 @@
 <html>
 
 <head>
-  <title>RummyQ</title>
-  <link rel="stylesheet" href="static/css/style.css">
+    <title>RummyQ</title>
+    <link rel="stylesheet" href="static/css/style.css">
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css" media="screen,projection" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css" media="screen,projection" />
 
 </head>
+
 <body class="font-cover" id="tablero">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    
+
+
+    <div id="gondola">
+        <img src="static/images/gondola.png ">
+    </div>
+    <a class="btn-floating btn-large red accent-3 " id="jugar">Jugar</a>
+    <div id="usu">
+        <img src="static/images/user.png" style="position: absolute;width: 110px;height:110px;top:10px;left: 30px;">
+        <img src="static/images/user2.png" style="position: absolute;width: 150px;height:150px;top:170px;left: 20px;">
+        <img src="static/images/user3.png" style="position: absolute;width: 140px;height:130px;top:320px;left: 30px;">
+        <img src="static/images/user.png" style="position: absolute;width: 110px;height:110px;top:490px;left: 35px;">
+    </div>
+
+    <div id="robo">
+        <img src="static/images/Cartas/atras.png">
+    </div>
 
 
 
+    <img id="drag1" src="static/images/Cartas/n10.png" width="95" height="105" draggable="true"
+        ondragstart="drag(event)">
 
 
+
+    <div id="Dropcartas">
+    </div>
 
     <script type="text/javascript" src="static/js/materialize.min.js"></script>
     <script type="text/javascript" src="static/js/main.js"></script>
+
+
+
+
+
+
 
 </body>
 
