@@ -11,7 +11,7 @@
     background-repeat: no-repeat;
        /*que la imagen se fija*/
     background-attachment: fixed;
-    background-position: center center;
+    background-position: center;
 
     /*background-color: #F5F5F5;*/
 
@@ -21,3 +21,18 @@
   padding: 355px;float:inline-end;width: 380px;
 }
 
+#div-start-btn{
+  position: absolute;
+  width: 300px;
+  z-index: 15;
+  top: 75%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
+}
+
+#startbtn{
+  width: 300px;
+  height: 100px;
+  z-index: 15;
+  border-radius: 15px;
+}
