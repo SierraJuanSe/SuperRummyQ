@@ -1,60 +1,42 @@
 (function(){
-var wsUri = "ws://localhost:30001";
-var websocket = new WebSocket(wsUri);
-var jugador='';
+ 
+ /**
+ * Script principal de la aplicacion
+ */
 
+function campoCarta() {
+  var espacio = 220;
+  var top = 453;
 
-websocket.onopen = function(evt) { 
-    console.log("--Conectado--"); 
-};
+  var top = 13;
 
-
-websocket.onerror = e =>{
-	console.log(e.data);
-};
-
-$('#unir').click(function () {
-	login();
-
-});
-
-function login(){
-
-	var nombre = $('#first_name2').val();
-	registro(nombre);
-    $(location).attr('href',"Tablero.html");
-      $('#tablero').show(1000);
-      alert("Nombre jugador: "+ nombre.toUpperCase(nombre));
-  };
-
-function registro(nombre) {
-	registro = {
-		type : 'registro',
-		nombre : nombre
-	};
-	jugador=JSON.stringify(registro);
-	websocket.send(jugador);
-	alert(jugador);
+  for (var j = 0; j <= 5; j++) {
+    for (var i = 0; i <= 9; i++) {
+      espacio = espacio + 83;
+      $('#Dropcartas').append('<div  ondrop="drop(event)" ondragover="allowDrop(event)"' +
+        ' style="position:fixed;width: 75px;height: 85px;' +
+        'padding: 10px;border: 1px solid gray;top:' + top + 'px;left:' + espacio + 'px;"></div>');
+    }
+    top = top + 110;
+    espacio = 220;
+  }
 }
 
 
+function allowDrop(ev) {
+  ev.preventDefault();
+}
 
-function setTurno() {
-	
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
 }
 
 
-
-
-
- $('#iniciar').click(function jugada(){
-
-	registro = {
-		type : 'iniciar',
-		nombre : usuario
-
-	};
- }); 
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
 
 
 
