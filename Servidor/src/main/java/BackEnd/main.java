@@ -1,21 +1,14 @@
 package BackEnd;
 
-import java.net.UnknownHostException;
-
-import utilidades.ServerConn;
+import controlador.ControladorPincipal;
 
 class main {
 
 	public static void main(String[] args) {
-		try {
-			ServerConn server = new ServerConn();
-			server.run();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-
+		ControladorPincipal cp = new ControladorPincipal(30000);
+		cp.start();
+		
 	}
 
 }

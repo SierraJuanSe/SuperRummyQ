@@ -8,15 +8,14 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
-
+import controlador.ControladorPincipal;
 
 
 public class ServerConn extends WebSocketServer{
+	private ControladorPincipal controlador;
 	
-	
-	public ServerConn() throws UnknownHostException {
-		super(new InetSocketAddress(InetAddress.getLocalHost(), 3030));
-		// TODO Auto-generated constructor stub
+	public ServerConn(ControladorPincipal controlador,int port) throws UnknownHostException {
+		super(new InetSocketAddress(port));
 	}
 
 	@Override
@@ -26,7 +25,6 @@ public class ServerConn extends WebSocketServer{
 	
 	@Override
 	public void onOpen(WebSocket conn, ClientHandshake handshake) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -38,7 +36,6 @@ public class ServerConn extends WebSocketServer{
 
 	@Override
 	public void onMessage(WebSocket conn, String message) {
-		// TODO Auto-generated method stub
 		
 	}
 

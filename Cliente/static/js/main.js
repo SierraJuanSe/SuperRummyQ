@@ -1,3 +1,4 @@
+
 /**
  * Script principal de la aplicacion
  */
@@ -86,3 +87,4 @@ function llevardrop(idCarta) {
      $('#'+idCarta).removeAttr('style');
   $('#espacio41').append(document.getElementById(idCarta));
 }
+
