@@ -1,6 +1,8 @@
+
 /**
  * Script principal de la aplicacion
  */
+
 
 campoCarta();
 $('#unir').click(function () {
@@ -10,13 +12,26 @@ $('#unir').click(function () {
 });
 
 $('#robar').click(function () {
-// alert($('#espacio41').not(':empty'));
-//   if ($('#espacio41').html=="") {
-    llevardrop('a9');
-  // }else{
-  //   alert('Esta ocupado');
-  // }
+
+var letras=['a','y','r','n'];
+var ocarta=['a','b']
+
+var m='';
+  for (let i = 1; i <=13; i++) {
+    m=letras[Math.round(Math.random()*3)]+i+ocarta[Math.round(Math.random()*1)];
+    console.log(m);
+      llevardrop(m); 
+  }
+
+
 });
+
+
+
+$('#jugar').click(function () {
+  alert('Estoy jugado rummyQ');
+});
+
 
 function campoCarta() {
   var espacio = 220;
@@ -37,9 +52,11 @@ function campoCarta() {
   }
 }
 
+
 function cartas() {
   var col = '';
   var nombre = '';
+  var ncarta='';
   for (var j = 1; j <= 4; j++) {
     if (j == 1) {
       col = 'a';
@@ -52,13 +69,21 @@ function cartas() {
     }
     for (var i = 1; i <= 13; i++) {
       nombre = col + i;
-      $('#espaciocarta').append('<img id="' + nombre + '" src="static/images/Cartas/' + nombre + '.png" width="95" height="105"' +
+      for (let j = 1; j <= 2; j++) {
+        if(j==1){
+          ncarta='a'
+        }else{
+          ncarta='b'
+        }
+      $('#espaciocarta').append('<img id="' + nombre+ncarta+'" src="static/images/Cartas/' + nombre + '.png" width="95" height="105"' +
         ' draggable="true" ondragstart="drag(event)" style="display: none;">');
+      }
     }
   }
-  //  $('#r5').attr('draggable',false);
+    // $('#r5').attr('draggable',false);
   // $('#y6').show();
   // $('#a6').show();
+  
 }
 
 
@@ -80,9 +105,9 @@ function drop(ev) {
    console.log('se ubico en '+ev.target.id);  
 }
 
-
+var cont=40;;
 function llevardrop(idCarta) {
-   console.log(document.getElementById(idCarta));
+  cont=cont+1;
      $('#'+idCarta).removeAttr('style');
-  $('#espacio41').append(document.getElementById(idCarta));
+     $('#espacio'+cont).append(document.getElementById(idCarta));
 }
