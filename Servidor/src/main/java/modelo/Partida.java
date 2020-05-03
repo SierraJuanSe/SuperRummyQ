@@ -26,16 +26,16 @@ public class Partida {
 	}
 	
 	//Ingresar jugador a la partida
-	public boolean insertJugador(String nombre, WebSocket conn){
+	public Jugador insertJugador(String nombre, WebSocket conn){
 		
 		if(!this.jugadores.containsKey(nombre)) {
 			int turno = this.jugadores.size() + 1;
 			Jugador j = new Jugador(nombre, turno, conn);
 			this.jugadores.put(nombre, j);
-			return true;
+			return this.jugadores.get(nombre);
 		}
 		
-		return false;
+		return null;
 	}
 	
 	//sacar jugador de la partida
@@ -64,19 +64,24 @@ public class Partida {
 	public void inicioPartida() {
 		llenarBolsa();
 		repartirFichas();
+		String nombre = null;
+		int turno = 1;
 		
 		for (Jugador j : this.jugadores.values()) {
 			Gson gson = new Gson();
 			String fichas = gson.toJson(j.getMisFichas());
-			j.getCliente().send(fichas);
-			String turno = "{\"type\":\"setTurno\", \"Turno\":"+ j.getTurno() +"}";
-			j.getCliente().send(turno);
+			
+			String setturno = "{\"type\":\"iniciar\",\"Turno\":"+ j.getTurno() +",\"fichas\": "+fichas+"}";
+			j.getCliente().send(setturno);
 			
 			if(j.getTurno() == 1) {
-				turno = "{\"type\":\"Turno\", \"jugador\":\""+j.getNombre()+"\", \"Turno\":"+ j.getTurno() +"}";
-				j.getCliente().send(turno);
+				nombre = j.getNombre();
+				turno =j.getTurno();
 			}
 		}
+		
+		String info = "{\"type\":\"Turno\", \"jugador\":\""+nombre+"\", \"Turno\":"+ String.valueOf(turno)+"}";
+		aTodos(info);
 		
 	}
 	

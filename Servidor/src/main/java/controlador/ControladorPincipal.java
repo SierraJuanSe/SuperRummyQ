@@ -2,6 +2,8 @@ package controlador;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -66,6 +68,7 @@ public class ControladorPincipal extends WebSocketServer{
 		this.conectados = new ArrayList<WebSocket>();
 	}
 	
+	//Toma el mensaje y lee el type para llamar a la funcion indicada
 	public void decodemensaje(WebSocket conn, String mensaje) {
 		JsonElement jsonElement = new JsonParser().parse(mensaje);
         JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -81,6 +84,7 @@ public class ControladorPincipal extends WebSocketServer{
         	this.partida.inicioPartida();
         	
         }else if(type.equals("jugada")) {
+        	jugadaJugador(conn, jsonObject);
         	
         }else if(type.equals("pasar")){
         	pasarTurno(conn, jsonObject);
@@ -88,15 +92,36 @@ public class ControladorPincipal extends WebSocketServer{
         
 	}
 	
+	//metodo para registrar jugadores en la partidad
 	public void registroJugador(WebSocket conn, JsonObject jsonObject) {
-		String nombre = jsonObject.get("nombre").toString().replace("\"", "");      	
-    	if(this.partida.insertJugador(nombre, conn)) {
-    		if(this.partida.getJugadores().size() == 1) {
-    			conn.send("Eres el lider de la partida");
+		String nombre = jsonObject.get("nombre").toString().replace("\"", "");
+		Jugador nuevoJ = this.partida.insertJugador(nombre, conn);
+		String rol = "invitado";
+		String info = "{\"type\":\"registro\", \"jugador\":\""+nombre+"\", \"rol\":\""+rol+"\"}";
+    	if(nuevoJ != null) { //el jugador ha sido anadido
+    		for (Jugador j : this.partida.getJugadores().values()) {
+    			rol = "invitado";
+				if(j.getTurno() == 1) {
+					rol = "lider";
+				}
+				info = "{\"type\":\"registro\", \"jugador\":\""+j.getNombre()+"\", \"rol\":\""+rol+"\"}";
+				nuevoJ.getCliente().send(info);
+			}
+    		
+    		if(nuevoJ.getTurno() == 1) {
+    			rol = "lider";
     		}else {
-    			conn.send("Te uniste a una pertida ya existente");
+    			rol = "invitado";
     		}
+    		
+    		info = "{\"type\":\"registro\", \"jugador\":\""+nuevoJ.getNombre()+"\", \"rol\":\""+rol+"\"}";
+    		this.partida.aTodos(info, nuevoJ.getCliente());
     	}
+	}
+	
+	//metodo para validar y confirmar la jugada 
+	public void jugadaJugador(WebSocket conn, JsonObject jsonObject) {
+		
 	}
 	
 	public void pasarTurno(WebSocket conn, JsonObject jsonObject) {
@@ -108,8 +133,10 @@ public class ControladorPincipal extends WebSocketServer{
     	if(robo) {
     		Ficha ficharobada = this.partida.getFicha();
     		j.robarFicha(ficharobada);
+    		Set<Ficha> setFicha = new HashSet<Ficha>();
+    		setFicha.add(ficharobada);
     		
-    		String jsonFicha = gson.toJson(ficharobada);
+    		String jsonFicha = gson.toJson(setFicha);
     		
     		
     		int numFichas = j.getMisFichas().size();
