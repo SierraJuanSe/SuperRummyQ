@@ -10,9 +10,12 @@ $('#unir').click(function () {
 });
 
 $('#robar').click(function () {
-// $('#espacio41').append('<img id="y6" src="static/images/Cartas/y6.png" width="95" height="105"' +
-// ' draggable="true" ondragstart="drag(event)">');
-  llevardrop('a9');
+// alert($('#espacio41').not(':empty'));
+//   if ($('#espacio41').html=="") {
+    llevardrop('a9');
+  // }else{
+  //   alert('Esta ocupado');
+  // }
 });
 
 function campoCarta() {
