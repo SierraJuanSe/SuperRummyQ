@@ -4,7 +4,7 @@
   width: 100%;
   height: 100vh;
   background-repeat: no-repeat;
-  background-size: cover; 
+  background-size: cover;
   display: none;
   overflow-x:hidden;
   overflow-y:hidden;
@@ -14,24 +14,23 @@
 
 
 #menu{
-  background-image: url(../images/Inicio1.png); 
+  background-image: url(../images/Inicio1.png);
   width: 100%;
-   height: 100vh;
-   background-repeat: no-repeat;
-   background-size: cover; 
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .font-cover{
-    /*cubra toda la pantalla*/
-    background-size: cover;
-      /*no se repita la imagen de fondo*/
-    background-repeat: no-repeat;
-       /*que la imagen se fija*/
-    background-attachment: fixed;
-    background-position: center;
+  /*cubra toda la pantalla*/
+  background-size: cover;
+    /*no se repita la imagen de fondo*/
+  background-repeat: no-repeat;
+     /*que la imagen se fija*/
+  background-attachment: fixed;
+  background-position: center;
 
-    /*background-color: #F5F5F5;*/
-
-
+  /*background-color: #F5F5F5;*/
 }
 
 .boton{
@@ -42,29 +41,28 @@
 #gondola{
   position:fixed;
   width:160px;
-  Height:70px; 
+  Height:70px;
   top: 440px;
-   left: 290px;
+  left: 290px;
 }
 
 #jugar{
   position:fixed;
   width:90px;
-  Height:90px; 
+  Height:90px;
   top: 480px;
-   left: 1190px;
+  left: 1190px;
 }
 
 #robo{
   position:fixed;
   width:110px;
-  Height:115px; 
+  Height:115px;
   top: 8px;
-   left: 1130px;
+  left: 1130px;
 }
 
 .carta{
   width:95px;
-   height:105px;
-  }
-
+  height:105px;
+}
