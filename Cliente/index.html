@@ -4,14 +4,117 @@
 <head>
   <title>RummyQ</title>
 
+  <link rel="stylesheet" href="static/css/style.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css" media="screen,projection" />
+
+
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css" media="screen,projection" />
   <link rel="stylesheet" href="static/css/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
+
 <body>
 
+
+  <body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <div id="menu">
+
+
+      <a style="position:absolute;width:260px;Height:90px; top: 400px; left: 560px;" class="waves-effect waves-light btn modal-trigger grey darken-4" href="#modal1">
+        <br><i class="material-icons md-195">play_circle_outline</i></a>
+
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          <div class="container" align:center>
+            <h4>Unirte a una partida</h4>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="nombre" type="text" class="validate">
+                <label class="active" for="nombre">Nombre</label>
+              </div>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit" id="unir" name="action">Unirse
+              <i class="material-icons right">add</i>
+
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div id="tablero">
+      <div id="gondola">
+        <img src="static/images/gondola.png ">
+      </div>
+      <a class="btn-floating btn-large red accent-3 " id="jugar">Jugar</a>
+      <div>
+        <img src="static/images/user.png" style="position: absolute;width: 110px;height:110px;top:10px;left: 70px;">
+        <!-- <h5 style="position: absolute;width: 110px;height:110px;top:10px;left: 130px;">hola</h5> -->
+        <img src="static/images/user2.png" style="position: absolute;width: 150px;height:150px;top:160px;left: 60px;">
+        <img src="static/images/user3.png" style="position: absolute;width: 140px;height:130px;top:320px;left: 70px;">
+        <img src="static/images/user.png" style="position: absolute;width: 110px;height:110px;top:490px;left: 75px;">
+
+      </div>
+      <div id="robo">
+        <input id="robar" type=image src="static/images/Cartas/atras.png">
+      </div>
+      <div id="espaciocarta">
+      </div>
+
+      <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:120px;left: 80px;opacity: 0.6;">
+      </div>
+      <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:283px;left: 80px;opacity: 0.6;">
+      </div>
+      <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:436px;left: 86px;opacity: 0.6;">
+      </div>
+      <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:600px;left: 80px;opacity: 0.6;">
+      </div>
+
+      <div id="Dropcartas">
+      </div>
+
+    </div>
+
+
+
+
+
+    <script type="text/javascript" src="static/js/materialize.min.js"></script>
+    <script type="text/javascript" src="static/js/main.js"></script>
+    <script src="static/js/conexion.js" charset="utf-8"></script>
+    <script src="static/js/acciones.js" charset="utf-8"></script>
+
+
+
+    <script>
+      $('.preloader-wrapper')
+        .delay(170)
+        .fadeOut();
+
+      $(document).ready(function() {
+        $('.modal').modal();
+
+      });
+      $(document).ready(function() {
+        M.updateTextFields();
+      });
+    </script>
+
+  </body>
+
+
+</html>
 </body>
+
 </html>
