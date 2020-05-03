@@ -1,7 +1,4 @@
-#login{
-    background-image: url(../images/Inicio1.png);
-  
-}
+
 #tablero{
   background-image: url(../images/tablero.png);
   width: 100%;
@@ -49,14 +46,9 @@
   Height:115px; 
   top: 8px;
    left: 1130px;
-
 }
 
-#carta {
-  position:fixed;
-  width: 95px;
-  height: 15px;
-  top: 153px;
-  left: 100px;
-  
+.carta{
+  width:95px;
+   height:105px;
 }
