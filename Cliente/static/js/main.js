@@ -5,7 +5,13 @@
 
 
 campoCarta();
+
 $('#unir').click(function () {
+  //tomar los datos del jugador y enviarlos al server
+  var nombre = $('#nombre').val();
+  login(nombre);
+
+  //mostrar / esconder inicio
   $('#menu').hide(500);
   $('#tablero').show(500);
   cartas();
@@ -102,7 +108,7 @@ function drop(ev) {
   var data = ev.dataTransfer.getData("text");
   console.log('data'+data);
   ev.target.appendChild(document.getElementById(data));
-   console.log('se ubico en '+ev.target.id);  
+   console.log('se ubico en '+ev.target.id);
 }
 
 var cont=40;;
