@@ -18,12 +18,17 @@ $('#unir').click(function () {
 });
 
 $('#robar').click(function () {
-  mostrarFichas(null);
-  });
-  
+  enviarTurno();
+});
+
+$('#iniciar').click(function () {
+  enviarIniciar();
+});
+
 
 $('#jugar').click(function () {
-  alert('Estoy jugado rummyQ');
+alert('Probar boton jugar');
+
 });
 
 
@@ -50,7 +55,7 @@ function campoCarta() {
 function cartas() {
   var col = '';
   var nombre = '';
-  var ncarta='';
+  var ncarta = '';
   for (var j = 1; j <= 4; j++) {
     if (j == 1) {
       col = 'a';
@@ -64,20 +69,20 @@ function cartas() {
     for (var i = 1; i <= 13; i++) {
       nombre = col + i;
       for (let j = 1; j <= 2; j++) {
-        if(j==1){
-          ncarta='a'
-        }else{
-          ncarta='b'
+        if (j == 1) {
+          ncarta = 'a'
+        } else {
+          ncarta = 'b'
         }
-      $('#espaciocarta').append('<img id="' + nombre+ncarta+'" src="static/images/Cartas/' + nombre + '.png" width="95" height="105"' +
-        ' draggable="true" ondragstart="drag(event)" style="display: none;">');
+        $('#espaciocarta').append('<img id="' + nombre + ncarta + '" src="static/images/Cartas/' + nombre + '.png" width="95" height="105"' +
+          ' draggable="true" ondragstart="drag(event)" style="display: none;">');
       }
     }
   }
-    // $('#r5').attr('draggable',false);
+  // $('#r5').attr('draggable',false);
   // $('#y6').show();
   // $('#a6').show();
-  
+
 }
 
 
@@ -94,15 +99,15 @@ function drag(ev) {
 function drop(ev) {
   // ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
-  console.log('data'+data);
+  console.log('data' + data);
   ev.target.appendChild(document.getElementById(data));
-   console.log('se ubico en '+ev.target.id);
+  console.log('se ubico en ' + ev.target.id);
 }
 
-var cont=40;;
+var cont = 40;;
 function llevardrop(idCarta) {
-  cont=cont+1;
-     $('#'+idCarta).removeAttr('style');
-     $('#espacio'+cont).append(document.getElementById(idCarta));
+  cont = cont + 1;
+  $('#' + idCarta).removeAttr('style');
+  $('#espacio' + cont).append(document.getElementById(idCarta));
 }
 
