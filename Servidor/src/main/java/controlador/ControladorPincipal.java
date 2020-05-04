@@ -82,11 +82,11 @@ public class ControladorPincipal extends WebSocketServer{
         	
         }else if(type.equals("iniciar")) {
         	this.partida.inicioPartida();
-        	
         }else if(type.equals("jugada")) {
         	jugadaJugador(conn, jsonObject);
         	
         }else if(type.equals("pasar")){
+        	
         	pasarTurno(conn, jsonObject);
         }
         
@@ -127,7 +127,7 @@ public class ControladorPincipal extends WebSocketServer{
 	public void pasarTurno(WebSocket conn, JsonObject jsonObject) {
 		String nombre = jsonObject.get("nombre").toString().replace("\"", "");   
     	Jugador j = this.partida.getJugador(nombre, conn);
-    	boolean robo = jsonObject.get("robar").getAsBoolean();
+    	boolean robo = jsonObject.get("robo").getAsBoolean();
     	Gson gson = new Gson();
     	
     	if(robo) {
@@ -145,6 +145,7 @@ public class ControladorPincipal extends WebSocketServer{
     		String info = "{\"type\":\"robo\", \"jugador\":\""+nom+"\", \"numFichas\":"+ numFichas +"}"; //info de numero de fichas del jugador
     		j.getCliente().send(infoFicha);
     		this.partida.aTodos(info, j.getCliente());
+    		
     	}
     	
     	this.partida.siguienteTurno(j.getTurno());
