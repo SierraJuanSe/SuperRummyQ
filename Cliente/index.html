@@ -28,7 +28,7 @@
     <div id="menu">
 
 
-      <a style="position:absolute;width:260px;Height:90px; top: 400px; left: 560px;" class="waves-effect waves-light btn modal-trigger grey darken-4" href="#modal1">
+      <a style="position:absolute;width:260px;Height:90px; top: 400px; left: 560px;" class="waves-effect waves-light btn modal-trigger grey darken-4">
         <br><i class="material-icons md-195">play_circle_outline</i></a>
 
       <div id="modal1" class="modal">
@@ -73,12 +73,15 @@
       </div>
 
       <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:120px;left: 80px;opacity: 0.6;">
+        <span class="red-text">Juan</span>
       </div>
       <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:283px;left: 80px;opacity: 0.6;">
       </div>
       <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:436px;left: 86px;opacity: 0.6;">
       </div>
       <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:600px;left: 80px;opacity: 0.6;">
+        <h6></h6>
+        <
       </div>
 
       <div id="Dropcartas">
@@ -103,12 +106,14 @@
         .fadeOut();
 
       $(document).ready(function() {
-        $('.modal').modal();
 
-      });
-      $(document).ready(function() {
         M.updateTextFields();
+        $('#btn1').click(function(){
+          var elems = document.querySelectorAll('.modal');
+
+        })
       });
+
     </script>
 
   </body>

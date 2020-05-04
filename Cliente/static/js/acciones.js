@@ -35,6 +35,8 @@ function registroJugador(mes) {
 
 		}
   }
+
+	//mostrar imagen nombre y el numero de cartas
 }
 
 function iniciar(mes) {

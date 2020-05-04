@@ -1,11 +1,13 @@
 package modelo;
 
 public class Ficha {
-	public static final String[] colores = new String[] {"Negro", "Amarillo", "Azul", "Rojo"};
+	public static final String[] colores = new String[] {"a", "y", "n", "r"};
+	private String id;
 	private String color;
 	private int valor;
 	
-	public Ficha(String color, int valor) {
+	public Ficha(String id,String color, int valor) {
+		this.setId(id);
 		this.color = color;
 		this.valor = valor;
 	}
@@ -39,6 +41,14 @@ public class Ficha {
 	@Override
 	public String toString() {
 		return "{'color': '"+this.color+"', 'valor': '"+this.valor+"'}";
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	
