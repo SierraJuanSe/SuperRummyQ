@@ -18,21 +18,9 @@ $('#unir').click(function () {
 });
 
 $('#robar').click(function () {
-
-var letras=['a','y','r','n'];
-var ocarta=['a','b']
-
-var m='';
-  for (let i = 1; i <=13; i++) {
-    m=letras[Math.round(Math.random()*3)]+i+ocarta[Math.round(Math.random()*1)];
-    console.log(m);
-      llevardrop(m); 
-  }
-
-
-});
-
-
+  mostrarFichas(null);
+  });
+  
 
 $('#jugar').click(function () {
   alert('Estoy jugado rummyQ');
@@ -117,3 +105,4 @@ function llevardrop(idCarta) {
      $('#'+idCarta).removeAttr('style');
      $('#espacio'+cont).append(document.getElementById(idCarta));
 }
+

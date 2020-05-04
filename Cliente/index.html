@@ -28,6 +28,8 @@
     <div id="menu">
 
 
+
+      
       <a style="position:absolute;width:260px;Height:90px; top: 400px; left: 560px;" class="waves-effect waves-light btn modal-trigger grey darken-4" href="#modal1">
         <br><i class="material-icons md-195">play_circle_outline</i></a>
 
@@ -41,7 +43,7 @@
                 <label class="active" for="nombre">Nombre</label>
               </div>
             </div>
-            <button class="btn waves-effect waves-light" type="submit" id="unir" name="action">Unirse
+            <button class="btn waves-effect waves-light btn modal-trigger" href="#modal2" type="submit" id="unir" name="action">Unirse
               <i class="material-icons right">add</i>
 
             </button>
@@ -50,6 +52,8 @@
         </div>
       </div>
 
+
+      
 
     </div>
 
@@ -72,17 +76,27 @@
       <div id="espaciocarta">
       </div>
 
-      <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:120px;left: 80px;opacity: 0.6;">
+      <div id="u1" style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:120px;left: 80px;opacity: 0.6;">
+        <h6 style="color:white";>Felipe</h6>
       </div>
-      <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:283px;left: 80px;opacity: 0.6;">
+      <div id="u1" style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:283px;left: 80px;opacity: 0.6;">
       </div>
-      <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:436px;left: 86px;opacity: 0.6;">
+      <div id="u3" style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:436px;left: 86px;opacity: 0.6;">
       </div>
-      <div style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:600px;left: 80px;opacity: 0.6;">
+      <div id="u4" style="position: absolute;width: 100px;height:35px ;border-radius: 5px; background-color:black;top:600px;left: 80px;opacity: 0.6;">
       </div>
 
-      <div id="Dropcartas">
+      <div  id="Dropcartas">
       </div>
+      
+      <div id="modal2" class="modal" >
+        <div class="modal-content" id="Sala">
+        
+        </div>
+      </div>
+
+
+      
 
     </div>
 
@@ -104,11 +118,17 @@
 
       $(document).ready(function() {
         $('.modal').modal();
-
+      
       });
+
+
       $(document).ready(function() {
         M.updateTextFields();
       });
+
+      
+      $('#modal2').modal({backdrop:'static', keyboard: false})
+
     </script>
 
   </body>
