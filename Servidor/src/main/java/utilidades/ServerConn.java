@@ -1,7 +1,7 @@
 package utilidades;
 
 import java.net.InetSocketAddress;
-import java.net.InetAddress;
+
 import java.net.UnknownHostException;
 
 import org.java_websocket.WebSocket;
@@ -12,7 +12,7 @@ import controlador.ControladorPincipal;
 
 
 public class ServerConn extends WebSocketServer{
-	private ControladorPincipal controlador;
+	
 	
 	public ServerConn(ControladorPincipal controlador,int port) throws UnknownHostException {
 		super(new InetSocketAddress(port));

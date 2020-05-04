@@ -80,7 +80,7 @@ public class Partida {
 			}
 		}
 		
-		String info = "{\"type\":\"Turno\", \"jugador\":\""+nombre+"\", \"Turno\":"+ String.valueOf(turno)+"}";
+		String info = "{\"type\":\"turno\", \"jugador\":\""+nombre+"\", \"Turno\":"+ String.valueOf(turno)+"}";
 		aTodos(info);
 		
 	}
@@ -98,7 +98,7 @@ public class Partida {
 		String info = null;
 		for (Jugador j : this.jugadores.values()) {
 			if(j.getTurno() == siguienteT) {
-				info = "{\"type\":\"Turno\", \"jugador\":\""+j.getNombre()+"\", \"Turno\":"+ j.getTurno() +"}";
+				info = "{\"type\":\"turno\", \"jugador\":\""+j.getNombre()+"\", \"Turno\":"+ j.getTurno() +"}";
 			}
 		}
 		
@@ -128,11 +128,13 @@ public class Partida {
 	 * Llenar la bolsa con las 104 fichas
 	 */
 	public void llenarBolsa() {
-		for(int k = 0; k < 2 ; k++) {
-			for(int i = 0; i<Ficha.colores.length ; i++) {
-				for(int j = 1; j < 14; j++) {
-					Ficha f = new Ficha(Ficha.colores[i], j);
-					this.bolsafichas.put(String.valueOf(k)+i+j, f);
+		String[] opcion = {"a", "b"};
+		for (int i = 0; i < opcion.length; i++) {
+			for (int j = 0; j < Ficha.colores.length; j++) {
+				for (int k = 1; k <= 13; k++) {
+					String id = Ficha.colores[j]+k+opcion[i];
+					Ficha f = new  Ficha(id, Ficha.colores[j], k);
+					this.bolsafichas.put(id, f);
 				}
 			}
 		}

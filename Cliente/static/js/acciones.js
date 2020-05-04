@@ -42,7 +42,7 @@ function registroJugador(mes) {
     otrosjugadores.push(jugador);
   }
 
-  
+
   $('#jugadores').append(invitado + '<br>');
 
 
@@ -60,7 +60,7 @@ function iniciar(mes) {
 
 function pintarNombres() {
   for (let i = 0; i < otrosjugadores.length; i++) {
- 
+
     $('#u'+(i+1)).empty().append(otrosjugadores[i].nombre);
     $('#nf'+(i+1)).empty().append(otrosjugadores[i].numfichas);
   }
@@ -90,12 +90,12 @@ function mostrarFichas(mifichas) {
 }
 
 function robo(mes) {
-  
+
 for (let i = 0; i < otrosjugadores.length; i++) {
      if (mes.jugador==otrosjugadores[i].nombre) {
 
        otrosjugadores[i].numfichas=mes.numFichas;
-     } 
+     }
 }
 pintarNombres();
 }
