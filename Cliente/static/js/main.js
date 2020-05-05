@@ -27,7 +27,7 @@ $('#iniciar').click(function () {
 
 
 $('#jugar').click(function () {
-alert('Probar boton jugar');
+enviarJugada();
 
 });
 
@@ -79,9 +79,9 @@ function cartas() {
       }
     }
   }
-  // $('#r5').attr('draggable',false);
-  // $('#y6').show();
-  // $('#a6').show();
+
+  
+
 
 }
 
@@ -99,9 +99,9 @@ function drag(ev) {
 function drop(ev) {
   // ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
-  console.log('data' + data);
   ev.target.appendChild(document.getElementById(data));
-  console.log('se ubico en ' + ev.target.id);
+  agregarJugada(data,ev.target.id);
+
 }
 
 var cont = 40;;
