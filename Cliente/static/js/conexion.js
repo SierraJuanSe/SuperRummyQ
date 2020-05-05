@@ -1,4 +1,4 @@
-var wsUri = "ws://25.133.208.104:30000";
+var wsUri = "ws://25.133.188.152:30000";
 var websocket = new WebSocket(wsUri);
 var nombrejugador = '';
 

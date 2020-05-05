@@ -17,7 +17,7 @@ $('#unir').click(function () {
   cartas();
 });
 
-$('#robar').click(function () {
+$('#pasar').click(function () {
   enviarTurno();
 });
 
@@ -39,12 +39,16 @@ function campoCarta() {
   var top = 13;
   var espaciodrop = 0;
   for (var j = 0; j <= 5; j++) {
-    for (var i = 0; i <= 9; i++) {
-      espacio = espacio + 83;
-      espaciodrop = espaciodrop + 1;
-      $('#Dropcartas').append('<div id="espacio' + espaciodrop + '" ondrop="drop(event)" ondragover="allowDrop(event)"' +
-        ' style="position:fixed;width: 75px;height: 85px;' +
-        'padding: 10px;border: 1px solid gray;top:' + top + 'px;left:' + espacio + 'px;"></div>');
+    for (var i = 0; i <= 17; i++) {
+      if ((j==4 | j==5) && i>13) {    
+     
+      }else{
+        espacio = espacio + 59;
+        espaciodrop = espaciodrop + 1;
+        $('#Dropcartas').append('<div id="espacio' + espaciodrop + '" ondrop="drop(event)" ondragover="allowDrop(event)"' +
+          ' style="position:fixed;width: 65px;height: 75px;' +
+          'border: 1px solid gray;top:' + top + 'px;left:' + espacio + 'px;"></div>');
+      }
     }
     top = top + 110;
     espacio = 220;
@@ -74,7 +78,7 @@ function cartas() {
         } else {
           ncarta = 'b'
         }
-        $('#espaciocarta').append('<img id="' + nombre + ncarta + '" src="static/images/Cartas/' + nombre + '.png" width="95" height="105"' +
+        $('#espaciocarta').append('<img id="' + nombre + ncarta + '" src="static/images/Cartas/' + nombre + '.png" width="81" height="91"' +
           ' draggable="true" ondragstart="drag(event)" style="display: none;">');
       }
     }
@@ -104,7 +108,7 @@ function drop(ev) {
 
 }
 
-var cont = 40;;
+var cont = 72;
 function llevardrop(idCarta) {
   cont = cont + 1;
   $('#' + idCarta).removeAttr('style');

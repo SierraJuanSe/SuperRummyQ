@@ -56,16 +56,14 @@
   position:fixed;
   width:90px;
   Height:90px;
-  top: 480px;
+  top: 450px;
   left: 1190px;
 }
 
 #robo{
   position:fixed;
-  width:110px;
-  Height:115px;
-  top: 8px;
-  left: 1130px;
+  top: 570px;
+  left: 1176px;
 }
 
 .carta{

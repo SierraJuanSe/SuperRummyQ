@@ -155,9 +155,9 @@ function funTurno(mes) {
     console.log('Es mi turno' + mes.jugador);
     $('#pinturno').css('top', '500px');
     $('#pinturno').show();
-
+    $('#pasar').show(1000);
     $('#jugar').show(1000);
-    $('#robar').prop('disabled', false);
+    // $('#robar').prop('disabled', false);
     $('#pinturno1').hide();
     $('#pinturno2').hide();
     $('#pinturno3').hide();
@@ -179,7 +179,7 @@ function funTurno(mes) {
   }
 
      console.log('Es el turrno de ' + mes.jugador);
-    $('#robar').prop('disabled', true);
+    $('#pasar').hide(1000);
     $('#jugar').hide(1000);
 
   }
