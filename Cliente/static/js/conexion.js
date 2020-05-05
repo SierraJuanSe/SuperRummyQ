@@ -38,8 +38,11 @@ websocket.onmessage = function DecodeMensaje(mensaje) {
   }else if (mes.type== 'robo') {
     
     robo(mes);
-  }else if (mes.type= 'turno') {
+  }else if (mes.type== 'turno') {
     funTurno(mes);
+  }else if(mes.type== 'jugada'){
+
+    dibujarJugada(mes);
   }
 }
 
