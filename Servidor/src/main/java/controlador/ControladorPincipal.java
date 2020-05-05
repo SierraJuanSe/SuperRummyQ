@@ -83,7 +83,7 @@ public class ControladorPincipal extends WebSocketServer{
         }else if(type.equals("iniciar")) {
         	this.partida.inicioPartida();
         }else if(type.equals("jugada")) {
-        	jugadaJugador(conn, jsonObject);
+        	jugadaJugador(conn, mensaje);
         	
         }else if(type.equals("pasar")){
         	
@@ -120,8 +120,9 @@ public class ControladorPincipal extends WebSocketServer{
 	}
 	
 	//metodo para validar y confirmar la jugada 
-	public void jugadaJugador(WebSocket conn, JsonObject jsonObject) {
-		
+	public void jugadaJugador(WebSocket conn, String info) {
+		System.out.println(info);
+		this.partida.aTodos(info, conn);
 	}
 	
 	public void pasarTurno(WebSocket conn, JsonObject jsonObject) {
