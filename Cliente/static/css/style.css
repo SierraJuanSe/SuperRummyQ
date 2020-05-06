@@ -60,11 +60,50 @@
   left: 1190px;
 }
 
+#pasar{
+  position:fixed;
+  width:90px;
+  Height:90px;
+  top: 550px;
+  left: 1190px;
+}
+
+#prueba{
+  width:190px;
+  Height:190px;
+background-color:red;
+overflow-y: scroll
+
+}
+
+#espaciosTablero{
+  position: absolute;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 80%;
+  height: 65%;
+  left: 20%;
+  top: 12px;
+  
+}
+
+#espaciogondola{
+  position: absolute;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  width: 63%;
+  height: 30%;
+  left: 20%;
+  top: 459px;
+
+}
+
 #robo{
   position:fixed;
   top: 570px;
   left: 1176px;
 }
+
 
 .carta{
   width:95px;

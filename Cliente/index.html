@@ -31,7 +31,6 @@
 
 
 
-
     <a style="position:absolute;width:260px;Height:90px; top: 400px; left: 560px;"
       class="waves-effect waves-light btn modal-trigger grey darken-4" href="#modal1">
       <br><i class="material-icons md-195">play_circle_outline</i></a>
@@ -81,7 +80,8 @@
       <img src="static/images/gondola.png ">
     </div>
 
-    <a class="btn-floating btn-large red accent-3 " id="jugar">Jugar</a>
+    <a class="btn-floating btn-large red accent-3 " id="jugar" href="#modalGanador">Jugar</a>
+    <a class="btn-floating btn-large red accent-3 " id="pasar">Pasar</i></a>
 
     <div>
 
@@ -97,11 +97,9 @@
       <img src="static/images/user.png" style="position: absolute;width: 110px;height:110px;top:490px;left: 75px;">
 
     </div>
-    <div id="robo">
-
-      <button class="btn waves-effect waves-light" type="submit" name="action" id="pasar" style="display: none;">
-        Pasar<i class="material-icons left">sentiment_very_dissatisfied</i>
-      </button> </div>
+    <!-- <div id="robo">
+      <a class="btn-floating btn-large red accent-3 " id="pasar">Pasar<i class="material-icons left">sentiment_very_dissatisfied</i></a>
+    </div> -->
 
     <div id="espaciocarta">
 
@@ -131,8 +129,19 @@
         <span class="material-icons">filter_none </span><span id="nfichasusuario"></span></h7>
     </div>
 
-    <div id="Dropcartas">
+    <div id="espaciosTablero">
+<table id="t1" >
 
+
+</table>
+
+    </div>
+
+    <div id="espaciogondola">
+      <table id="t2" >
+
+
+      </table>
     </div>
 
     <div id="modal2" class="modal">
@@ -163,7 +172,15 @@
 
 
 
-
+    <div id="modalGanador" class="modal">
+      <div class="modal-content">
+        <h4>¡Buena Partida!</h4>
+       
+      </div>
+      <div class="modal-footer">
+        <a href="index.html" class="modal-close waves-effect waves-green btn-flat">Volver a inicio</a>
+      </div>
+    </div>
 
 
 
