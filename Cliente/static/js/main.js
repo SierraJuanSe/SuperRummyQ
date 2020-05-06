@@ -14,7 +14,8 @@ $('#unir').click(function () {
   //mostrar / esconder inicio
   $('#menu').hide(500);
   $('#tablero').show(500);
-   cartas();
+  cartas();
+
 
 });
 
@@ -24,12 +25,14 @@ $('#pasar').click(function () {
 
 $('#iniciar').click(function () {
   enviarIniciar();
+
 });
 
 
 $('#jugar').click(function () {
   enviarJugada();
-
+  $('#alerta').show(1000);
+  $('#alerta').hide(10000);
 });
 
 
@@ -40,7 +43,7 @@ function campoCarta() {
   var espaciodrop = 99;
   for (var j = 0; j <= 9; j++) {
     texto += '<tr>';
-    
+
     for (var i = 0; i <= 13; i++) {
 
       espaciodrop = espaciodrop + 1;
@@ -50,7 +53,7 @@ function campoCarta() {
 
 
     }
- espaciodrop+=100-14;
+    espaciodrop += 100 - 14;
     texto += '</tr>';
 
   }
@@ -65,9 +68,9 @@ function campoCarta() {
     texto += '<tr>';
     for (var i = 0; i <= 10; i++) {
       espaciodrop += 1;
-      texto += '<td> <div id="espacio'+ espaciodrop + '" ondrop="drop(event)" ondragover="allowDrop(event)"' +
-      ' style="border: 1px solid gray;width: 65px;height: 75px;"> </div>  </td>';
-     
+      texto += '<td> <div id="espacio' + espaciodrop + '" ondrop="drop(event)" ondragover="allowDrop(event)"' +
+        ' style="border: 1px solid gray;width: 65px;height: 75px;"> </div>  </td>';
+
     }
     texto += '</tr>';
   }
@@ -129,13 +132,23 @@ function drop(ev) {
 
 }
 
-var cont = 9999;
 function llevardrop(idCarta) {
-   cont = cont + 1;
+  var cont;
+  var b = ($("#a").html());
+  for (let i = 10000; i < 10022; i++) {
+    cont = i;
+    var a = ($("#espacio" + i).html());
+    if (a == b) {
+      //  console.log('Esta vacio');
+      $('#' + idCarta).removeAttr('style');
+      $('#espacio' + i).append(document.getElementById(idCarta));
+      break;
+    } else {
+      console.log('no esta vacio');
+    }
 
-   $('#' + idCarta).removeAttr('style');
-     $('#espacio'+cont).append(document.getElementById(idCarta));
-    return cont;
+  }
+
+  return cont;
 
 }
-

@@ -32,7 +32,7 @@
 
 
     <a style="position:absolute;width:260px;Height:90px; top: 400px; left: 560px;"
-      class="waves-effect waves-light btn modal-trigger grey darken-4" href="#modal1">
+      class="waves-effect waves-light btn modal-trigger green lighten-1" href="#modal1">
       <br><i class="material-icons md-195">play_circle_outline</i></a>
 
     <div id="modal1" class="modal">
@@ -61,6 +61,7 @@
   </div>
 
   <div id="tablero">
+
 
 
     <a class="btn-floating pulse #ffebee red lighten-5" id="pinturno" style="width:100px;height:100px;
@@ -130,15 +131,15 @@
     </div>
 
     <div id="espaciosTablero">
-<table id="t1" >
+      <table id="t1">
 
 
-</table>
+      </table>
 
     </div>
 
     <div id="espaciogondola">
-      <table id="t2" >
+      <table id="t2">
 
 
       </table>
@@ -146,7 +147,7 @@
 
     <div id="modal2" class="modal">
       <div class="modal-content" id="Sala">
-        <div id="lider" style="display: none;">
+        <div id="lider" style="display: none;" class="container">
           <h4>¡Hola! Tu eres el lider</h4> <br> Espera mientras se conectan tus invitados <br>
           Cuando quieras inicar la partida lo puedes hacer <br><br>
           <div id="jugadores">
@@ -157,7 +158,7 @@
           </button>
 
         </div>
-        <div id="invitado" style="display: none;">
+        <div id="invitado" style="display: none;" class="container">
           <h4>¡Hola! Tu eres un invitado </h4> <br> Espera mientras se conectan los otros jugadores <br><br>
           <div class="progress">
             <div class="indeterminate"></div>
@@ -175,7 +176,8 @@
     <div id="modalGanador" class="modal">
       <div class="modal-content">
         <h4>¡Buena Partida!</h4>
-       
+        <h6>El ganador es:</h6>      
+                                  
       </div>
       <div class="modal-footer">
         <a href="index.html" class="modal-close waves-effect waves-green btn-flat">Volver a inicio</a>
@@ -183,19 +185,25 @@
     </div>
 
 
+    <div id="alerta" 
+      style="position: fixed;width: 250px;height: 50px;left: 40%;background-color:red; opacity: 0.6;top: 13px; text-align: center;display:none;">
+      <h7 style="color:white">
+        <span class="material-icons">
+        error_outline
+        </span>¡Ouchs! No puedes realizar esta jugada, intenta una mejor</h7>
+
+    </div>  
 
 
   </div>
-
-
-
-
 
   <script type="text/javascript" src="static/js/materialize.min.js"></script>
   <script type="text/javascript" src="static/js/main.js"></script>
   <script src="static/js/conexion.js" charset="utf-8"></script>
   <script src="static/js/acciones.js" charset="utf-8"></script>
 
+  <div id="a" ondrop="drop(event)" ondragover="allowDrop(event)"' +
+  ' style="border: 1px solid gray;width: 65px;height: 75px;display:none;"> </div>
 
 
   <script>

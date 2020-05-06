@@ -20,7 +20,7 @@ function login(jugador) {
 
   nombrejugador = JSON.stringify(registro);
   websocket.send(nombrejugador);
-  //alert(nombrejugador);
+
 }
 
 function agregarJugada(id, position) {
