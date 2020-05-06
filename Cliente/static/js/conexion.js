@@ -41,7 +41,9 @@ websocket.onmessage = function DecodeMensaje(mensaje) {
   }else if(mes.type =='confirmarJugada'){
     confirmarJugada(mes);
   
-  }     
+  }else if(mes.type == 'nuevajugada')     {
+    nuevajugada(mes);
+  }
 }
 
 function ping() {

@@ -19,14 +19,14 @@ function login(jugador) {
 
   nombrejugador = JSON.stringify(registro);
   websocket.send(nombrejugador);
-  
+
 }
 
 function agregarJugada(id, position) {
   ficha = {id: id, espacio: position};
 for (let i = 0; i < mifichas.length; i++) {
     if(mifichas[i].id == id){
-      ficha.anterior=mifichas[i]
+      ficha.anterior=mifichas[i].espacio;
     }  
 }
 
@@ -39,6 +39,17 @@ for (let i = 0; i < mifichas.length; i++) {
   jugada.fichas.push(ficha);
   // console.log(jugada.fichas);
 }
+
+function nuevajugada(mes){
+  dibujarJugada(mes);
+  for (let i = 0; i < mes.fichas.length; i++) {
+   jugada.fichas.push(mes.fichas[i]);
+    
+  }
+}
+
+
+
 
 function enviarJugada() {
   var mensaje=JSON.stringify(jugada);
@@ -56,19 +67,24 @@ function dibujarJugada(mes) {
 }
 
 function confirmarJugada(mes){
-  var fichasprevias = new Array();
-  fichasprevias=mifichas;
 	if(mes.confirmar == true){
-		robo=false;
-    dibujarJugada(mes)
+    robo=false;
+    for (let i = 0; i < mifichas.length; i++){
+      for (let j = 0; j < mes.fichas.length; j++) {
+//jugada.fichas.splice(i, 1);
+        if(mifichas[i].id == mes.fichas[j].id){
+          mifichas.splice(i,1);
+        }
+        
+      }
+    
+    }
+      
 	}else{
     //activar div de Alerta...
-    for (let i = 0; i < fichasprevias.length; i++) {
-      llevardrop(fichasprevias[i].id);
+    
   
     }
-		
-	}
 
 }
 
@@ -140,8 +156,9 @@ function mostrarFichas(mifichas) {
 
   for (let i = 0; i < mifichas.length; i++) {
 
+    mifichas[i].espacio=llevardrop(mifichas[i].id);
     // console.log(mifichas[i].id);
-    llevardrop(mifichas[i].id);
+    
     // $('#'+m).attr('draggable',false);
 
   }
