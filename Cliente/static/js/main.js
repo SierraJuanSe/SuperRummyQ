@@ -71,7 +71,6 @@ function campoCarta() {
     }
     top = top + 110;
     espacio = 220;
-    espaciodrop = 100 * (j+2);
   }
   $('#t2').append(texto);
 

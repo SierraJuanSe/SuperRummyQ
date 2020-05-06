@@ -125,21 +125,31 @@ public class ControladorPincipal extends WebSocketServer{
 		Gson gson =  new Gson();
 		 //conversion de json a un array de fichas con id y espacio
 		FichaLLegada[] fichasllegadas = gson.fromJson(jsonObject.get("fichas"), FichaLLegada[].class);
-		ArrayList<Set<FichaLLegada>> listjugadas = new ArrayList<Set<FichaLLegada>>();
-		Set<FichaLLegada> jugada = new HashSet<FichaLLegada>();
-		jugada.add(fichasllegadas[0]);
 		
+		ArrayList<ArrayList<FichaLLegada>> listJugadas = new ArrayList<ArrayList<FichaLLegada>>();
+		ArrayList<FichaLLegada> jugada = new ArrayList<FichaLLegada>();
+		
+		//separar las fichas que llegan en diferentes jugadas dependiendo el espacio entre ellas
+		jugada.add(fichasllegadas[0]);
+		System.out.println("primera ficha " + fichasllegadas[0]);
 		for (int i = 0; i < fichasllegadas.length - 1; i++) {
-			
-			/*if(fichasllegadas[i].getEspacio() + 1 == fichasllegadas[i+1].getEspacio()) {
+			if(fichasllegadas[i].getEspacio() + 1 == fichasllegadas[i+1].getEspacio()) {
 				jugada.add(fichasllegadas[i+1]);
+				System.out.println(jugada);
 			}else {
-				listjugadas.add(jugada);
-				jugada = new HashSet<FichaLLegada>();
-			}*/
+				listJugadas.add(jugada);
+				jugada = new ArrayList<FichaLLegada>();
+				jugada.add(fichasllegadas[i]);
+				System.out.println("nueva jugada " + jugada);
+			}
 		}
 		
-		System.out.println(listjugadas.toString());
+		if (!listJugadas.contains(jugada)) {
+			listJugadas.add(jugada);
+		}
+		
+		System.out.println(listJugadas.size());
+		System.out.println(listJugadas.toString());
 	}
 	
 	public void pasarTurno(WebSocket conn, JsonObject jsonObject) {

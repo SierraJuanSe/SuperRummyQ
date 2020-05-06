@@ -36,9 +36,6 @@ function agregarJugada(id, position) {
 }
 
 function enviarJugada() {
-
-
-
   jugada.fichas.sort(function (a, b) {
     if (a.espacio > b.espacio) {
       return 1;
