@@ -2,8 +2,6 @@ var nombre = '';
 var turno = '';
 var rol = '';
 var numfichas = 0;
-var mifichas = new Array();
-var otrosjugadores = new Array();
 var robo =true;
 var jugada = {
   type : "jugada",
@@ -21,11 +19,17 @@ function login(jugador) {
 
   nombrejugador = JSON.stringify(registro);
   websocket.send(nombrejugador);
-  //alert(nombrejugador);
+  
 }
 
 function agregarJugada(id, position) {
   ficha = {id: id, espacio: position};
+for (let i = 0; i < mifichas.length; i++) {
+    if(mifichas[i].id == id){
+      ficha.anterior=mifichas[i]
+    }  
+}
+
   jugada.fichas.forEach((item, i) => {
     if(item.id == id){
       jugada.fichas.splice(i, 1);
@@ -52,13 +56,17 @@ function dibujarJugada(mes) {
 }
 
 function confirmarJugada(mes){
-	var arrayprevio = new Array(); 
-	arrayprevio = jugada;
+  var fichasprevias = new Array();
+  fichasprevias=mifichas;
 	if(mes.confirmar == true){
 		robo=false;
     dibujarJugada(mes)
 	}else{
-		//activar div de Alerta...
+    //activar div de Alerta...
+    for (let i = 0; i < fichasprevias.length; i++) {
+      llevardrop(fichasprevias[i].id);
+  
+    }
 		
 	}
 

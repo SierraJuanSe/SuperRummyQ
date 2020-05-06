@@ -17,6 +17,7 @@ import com.google.gson.JsonParser;
 import modelo.Ficha;
 import modelo.Jugador;
 import modelo.Partida;
+import modelo.Tablero;
 
 public class ControladorPincipal extends WebSocketServer{
 	//private int port;
@@ -83,7 +84,7 @@ public class ControladorPincipal extends WebSocketServer{
         }else if(type.equals("iniciar")) {
         	this.partida.inicioPartida();
         }else if(type.equals("jugada")) {
-        	jugadaJugador(conn, mensaje);
+        	jugadaJugador(conn, jsonObject, mensaje);
         	
         }else if(type.equals("pasar")){
         	
@@ -120,9 +121,73 @@ public class ControladorPincipal extends WebSocketServer{
 	}
 	
 	//metodo para validar y confirmar la jugada 
-	public void jugadaJugador(WebSocket conn, String info) {
-		System.out.println(info);
-		this.partida.aTodos(info, conn);
+	public void jugadaJugador(WebSocket conn, JsonObject jsonObject, String mensaje) {
+		Gson gson =  new Gson();
+		int contValidas = 0; //contador para confirmar que todos los movimientos sean validos
+		 //conversion de json a un array de fichas con id y espacio
+		FichaLLegada[] fichasllegadas = gson.fromJson(jsonObject.get("fichas"), FichaLLegada[].class);
+		
+		//array con las posibles jugadas
+		ArrayList<ArrayList<FichaLLegada>> listJugadas = new ArrayList<ArrayList<FichaLLegada>>();
+		ArrayList<FichaLLegada> jugada = new ArrayList<FichaLLegada>();
+		
+		//separar las fichas que llegan en diferentes jugadas dependiendo el espacio entre ellas
+		jugada.add(fichasllegadas[0]);
+		for (int i = 0; i < fichasllegadas.length - 1; i++) {
+			if(fichasllegadas[i].getEspacio() + 1 == fichasllegadas[i+1].getEspacio()) {
+				jugada.add(fichasllegadas[i+1]);
+			}else {
+				listJugadas.add(jugada);
+				jugada = new ArrayList<FichaLLegada>();
+				jugada.add(fichasllegadas[i+1]);
+			}
+		}
+		
+		if (!listJugadas.contains(jugada)) {
+			listJugadas.add(jugada);
+		}
+		
+		System.out.println("jugadas recividas "+listJugadas.size());
+		System.out.println(listJugadas.toString());
+		//validacion de las n jugadas recividas que se encuentran en el tablero
+		ArrayList<String> jugadasActuales =  new ArrayList<String>();
+		Jugador j = this.partida.getJugador(null, conn);
+		Tablero tablero = this.partida.getTablero();
+		for (int i = 0; i < listJugadas.size(); i++) {
+			ArrayList<Ficha> fichas = new ArrayList<Ficha>();
+			for (FichaLLegada fichaLLegada : listJugadas.get(i)) {
+				Ficha f = j.getFicha(fichaLLegada.getId());
+				if(f != null) {
+					fichas.add(f);
+				}else {
+					f = tablero.getFicha(fichaLLegada.getId());
+					if(f != null) {
+						fichas.add(f);
+					}
+				}
+			}
+					
+			System.out.println(fichas);
+			String id = String.valueOf(listJugadas.get(i).get(0).getEspacio());
+			if(tablero.insertJugada(id, fichas)) {
+				j.hacerJugada(fichas);
+				contValidas ++;
+				jugadasActuales.add(id);
+			}else {
+				System.out.println("no funciona :(" + id);
+			}
+		}
+		
+		System.out.println("jugadas en el tablero " +tablero.getJugadas().toString());
+		if(contValidas == listJugadas.size()) {
+			System.out.println("si funciona " +j.getNumFichas());
+			this.partida.aTodos(mensaje, conn);
+		}
+		
+		
+		tablero.actualizarJugadas(jugadasActuales);
+		System.out.println("si sale");
+		System.out.println("jugadas en el tablero " +tablero.getJugadas().toString());
 	}
 	
 	public void pasarTurno(WebSocket conn, JsonObject jsonObject) {
@@ -132,15 +197,15 @@ public class ControladorPincipal extends WebSocketServer{
     	Gson gson = new Gson();
     	
     	if(robo) {
-    		Ficha ficharobada = this.partida.getFicha();
-    		j.robarFicha(ficharobada);
-    		Set<Ficha> setFicha = new HashSet<Ficha>();
-    		setFicha.add(ficharobada);
+    		String  randomkey = this.partida.getFicha();
+    		Ficha f = this.partida.getBolsafichas().remove(randomkey);
+    		j.robarFicha(randomkey, f);
+    		Set<Ficha> setficha = new HashSet<Ficha>();
+    		setficha.add(j.getFicha(randomkey));
     		
-    		String jsonFicha = gson.toJson(setFicha);
+    		String jsonFicha = gson.toJson(setficha);
     		
-    		
-    		int numFichas = j.getMisFichas().size();
+    		int numFichas = j.getNumFichas();
     		String nom = j.getNombre();
     		String infoFicha = "{\"type\":\"nuevaFicha\", \"jugador\":\""+nom+"\", \"ficha\": "+ jsonFicha + ", \"numFichas\":"+ numFichas +"}";
     		String info = "{\"type\":\"robo\", \"jugador\":\""+nom+"\", \"numFichas\":"+ numFichas +"}"; //info de numero de fichas del jugador

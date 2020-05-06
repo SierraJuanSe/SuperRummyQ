@@ -1,9 +1,7 @@
 package modelo;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 import org.java_websocket.WebSocket;
 
@@ -64,13 +62,13 @@ public class Partida {
 	public void inicioPartida() {
 		llenarBolsa();
 		repartirFichas();
+		
 		String nombre = null;
 		int turno = 1;
 		
 		for (Jugador j : this.jugadores.values()) {
 			Gson gson = new Gson();
-			String fichas = gson.toJson(j.getMisFichas());
-			
+			String fichas = gson.toJson(j.getMisFichas().values());
 			String setturno = "{\"type\":\"iniciar\",\"Turno\":"+ j.getTurno() +",\"fichas\": "+fichas+"}";
 			j.getCliente().send(setturno);
 			
@@ -146,9 +144,10 @@ public class Partida {
 	 */
 	public void repartirFichas() {
 		for (Jugador j : this.jugadores.values()) {
-			Set<Ficha> repartidas = new HashSet<Ficha>();
+			HashMap<String, Ficha> repartidas = new HashMap<String, Ficha>();
 			for (int i = 0; i < 14; i++) {
-				repartidas.add(getFicha());
+				String randomKey =  getFicha();
+				repartidas.put(randomKey, this.bolsafichas.remove(randomKey));
 			}
 			j.setMisFichas(repartidas);
 		}
@@ -157,12 +156,10 @@ public class Partida {
 	/*
 	 * Saca una ficha de la bolsa aleatoriamente
 	 */
-	public Ficha getFicha() {
+	public String getFicha() {
 		Object[] llaves = this.bolsafichas.keySet().toArray();
 		String randomKey = (String) llaves[new Random().nextInt(llaves.length)];
-		Ficha f = this.bolsafichas.get(randomKey);
-		this.bolsafichas.remove(randomKey);
-		return f;
+		return randomKey;
 	}
 	
 	

@@ -15,40 +15,67 @@ $('#unir').click(function () {
   $('#menu').hide(500);
   $('#tablero').show(500);
   cartas();
+
+
 });
 
-$('#robar').click(function () {
+$('#pasar').click(function () {
   enviarTurno();
 });
 
 $('#iniciar').click(function () {
   enviarIniciar();
+
 });
 
 
 $('#jugar').click(function () {
-enviarJugada();
-
+  enviarJugada();
+  $('#alerta').show(1000);
+  $('#alerta').hide(10000);
 });
 
 
 function campoCarta() {
-  var espacio = 220;
-  var top = 450;
 
-  var top = 13;
-  var espaciodrop = 0;
-  for (var j = 0; j <= 5; j++) {
-    for (var i = 0; i <= 9; i++) {
-      espacio = espacio + 83;
+  //Espacios del tablero
+  var texto = '';
+  var espaciodrop = 99;
+  for (var j = 0; j <= 9; j++) {
+    texto += '<tr>';
+
+    for (var i = 0; i <= 13; i++) {
+
       espaciodrop = espaciodrop + 1;
-      $('#Dropcartas').append('<div id="espacio' + espaciodrop + '" ondrop="drop(event)" ondragover="allowDrop(event)"' +
-        ' style="position:fixed;width: 75px;height: 85px;' +
-        'padding: 10px;border: 1px solid gray;top:' + top + 'px;left:' + espacio + 'px;"></div>');
+
+      texto += '<td> <div id="espacio' + espaciodrop + '" ondrop="drop(event)" ondragover="allowDrop(event)"' +
+        ' style="border: 1px solid  #2ABB00;width: 65px;height: 75px;"></div>  </td>';
+
+
+    }
+    espaciodrop += 100 - 14;
+    texto += '</tr>';
+
+  }
+
+
+  $('#t1').append(texto);
+
+  //espacios de la gondola
+  texto = '';
+  espaciodrop = 9999;
+  for (var j = 0; j <= 1; j++) {
+    texto += '<tr>';
+    for (var i = 0; i <= 10; i++) {
+      espaciodrop += 1;
+      texto += '<td> <div id="espacio' + espaciodrop + '" ondrop="drop(event)" ondragover="allowDrop(event)"' +
+        ' style="border: 1px solid gray;width: 65px;height: 75px;"> </div>  </td>';
     }
     top = top + 110;
     espacio = 220;
   }
+  $('#t2').append(texto);
+
 }
 
 
@@ -74,13 +101,13 @@ function cartas() {
         } else {
           ncarta = 'b'
         }
-        $('#espaciocarta').append('<img id="' + nombre + ncarta + '" src="static/images/Cartas/' + nombre + '.png" width="95" height="105"' +
+        $('#espaciocarta').append('<img id="' + nombre + ncarta + '" src="static/images/Cartas/' + nombre + '.png" width="91" height="101"' +
           ' draggable="true" ondragstart="drag(event)" style="display: none;">');
       }
     }
   }
 
-  
+
 
 
 }
@@ -100,14 +127,28 @@ function drop(ev) {
   // ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   ev.target.appendChild(document.getElementById(data));
-  agregarJugada(data,ev.target.id);
+  var posicion = parseInt(ev.target.id.substring(7));
+  agregarJugada(data, posicion);
 
 }
 
-var cont = 40;;
 function llevardrop(idCarta) {
-  cont = cont + 1;
-  $('#' + idCarta).removeAttr('style');
-  $('#espacio' + cont).append(document.getElementById(idCarta));
-}
+  var cont;
+  var b = ($("#a").html());
+  for (let i = 10000; i < 10022; i++) {
+    cont = i;
+    var a = ($("#espacio" + i).html());
+    if (a == b) {
+      //  console.log('Esta vacio');
+      $('#' + idCarta).removeAttr('style');
+      $('#espacio' + i).append(document.getElementById(idCarta));
+      break;
+    } else {
+      console.log('no esta vacio');
+    }
 
+  }
+
+  return cont;
+
+}
