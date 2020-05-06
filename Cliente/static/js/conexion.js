@@ -1,5 +1,4 @@
-
-var wsUri = "ws://25.133.188.152:30000";
+var wsUri = "ws://25.133.208.104:30000";
 var websocket = new WebSocket(wsUri);
 var nombrejugador = '';
 
@@ -41,10 +40,10 @@ websocket.onmessage = function DecodeMensaje(mensaje) {
     robo(mes);
   }else if (mes.type== 'turno') {
     funTurno(mes);
-  }else if(mes.type== 'jugada'){
-
-    dibujarJugada(mes);
-  }
+  }else if(mes.type =='confirmarJugada'){
+    confirmarJugada(mes);
+  
+  }     
 }
 
 function ping() {

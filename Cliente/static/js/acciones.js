@@ -4,6 +4,7 @@ var rol = '';
 var numfichas = 0;
 var mifichas = new Array();
 var otrosjugadores = new Array();
+var robo =true;
 var jugada = {
   type : "jugada",
   fichas : []
@@ -45,12 +46,21 @@ function dibujarJugada(mes) {
   for (let i = 0; i < mes.fichas.length; i++) {
     $('#'+mes.fichas[i].id ).removeAttr('style');
        $('#'+mes.fichas[i].espacio).append(document.getElementById(mes.fichas[i].id));
-      // console.log($('#'+mes.fichas[i].id));
-      // console.log($('#'+mes.fichas[i].espacio));
-
-    //  console.log(mes.fichas[i].espacio);
-    //  console.log(mes.fichas[i].id);
+      
   }
+
+}
+
+function confirmarJugada(mes){
+	var arrayprevio = new Array(); 
+	arrayprevio = jugada;
+	if(mes.confirmar == true){
+		robo=false;
+    dibujarJugada(mes)
+	}else{
+		//activar div de Alerta...
+		
+	}
 
 }
 
@@ -224,7 +234,7 @@ function enviarTurno() {
   turno = {
     type: 'pasar',
     nombre: 'nombre',
-    robo: true
+    robo: robo
   }
 
   mensaje = JSON.stringify(turno);
