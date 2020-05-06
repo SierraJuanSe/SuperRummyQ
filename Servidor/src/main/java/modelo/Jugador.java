@@ -1,10 +1,8 @@
 package modelo;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.java_websocket.WebSocket;
 
 public class Jugador {
@@ -26,8 +24,15 @@ public class Jugador {
 	}
 
 	
-	public void hacerJugada() {
+	public boolean hacerJugada(ArrayList<Ficha> fichas) {
+		boolean borrados = true;
+		for (Ficha ficha : fichas) {
+			if(this.misFichas.remove(ficha.getId()) == null) {
+				borrados = false;
+			}
+		}
 		
+		return borrados;
 	}
 	
 	public Ficha getFicha(String key) {
@@ -55,6 +60,7 @@ public class Jugador {
 	}
 
 	public int getNumFichas() {
+		this.numFichas = this.misFichas.size();
 		return numFichas;
 	}
 

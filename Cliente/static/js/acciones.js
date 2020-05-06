@@ -31,7 +31,9 @@ function agregarJugada(id, position) {
     }
   });
 
-  jugada.fichas.push(ficha);
+  if (position < 10000) {
+    jugada.fichas.push(ficha);
+  }
   // console.log(jugada.fichas);
 }
 
@@ -48,7 +50,6 @@ function enviarJugada() {
   });
   var mensaje = JSON.stringify(jugada);
   websocket.send(mensaje);
-  jugada.fichas=[];
 }
 
 function dibujarJugada(mes) {
