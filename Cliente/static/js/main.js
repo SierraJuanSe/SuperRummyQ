@@ -70,9 +70,9 @@ function campoCarta() {
       espaciodrop += 1;
       texto += '<td> <div id="espacio' + espaciodrop + '" ondrop="drop(event)" ondragover="allowDrop(event)"' +
         ' style="border: 1px solid gray;width: 65px;height: 75px;"> </div>  </td>';
-
     }
-    texto += '</tr>';
+    top = top + 110;
+    espacio = 220;
   }
   $('#t2').append(texto);
 

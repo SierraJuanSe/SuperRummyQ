@@ -1,4 +1,4 @@
-var wsUri = "ws://25.133.188.152:30000";
+var wsUri = "ws://localhost:30000";
 var websocket = new WebSocket(wsUri);
 var nombrejugador = '';
 
@@ -24,7 +24,7 @@ websocket.onclose = function (evt) {
 
 websocket.onmessage = function DecodeMensaje(mensaje) {
   mes = JSON.parse(mensaje.data);
-  
+
   if (mes.type == 'ping') {
     console.log("Pong hecho " + mes.message);
     ping();
@@ -33,10 +33,8 @@ websocket.onmessage = function DecodeMensaje(mensaje) {
   } else if (mes.type == 'iniciar') {
     iniciar(mes);
   } else if (mes.type == 'nuevaFicha') {
- 
     nuevaFicha(mes);
   }else if (mes.type== 'robo') {
-    
     robo(mes);
   }else if (mes.type== 'turno') {
     funTurno(mes);

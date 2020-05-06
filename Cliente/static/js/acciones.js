@@ -2,8 +2,8 @@ var nombre = '';
 var turno = '';
 var rol = '';
 var numfichas = 0;
-var mifichas = new Array();
-var otrosjugadores = new Array();
+var mifichas = [];
+var otrosjugadores = [];
 var jugada = {
   type: "jugada",
   fichas: []
@@ -31,14 +31,13 @@ function agregarJugada(id, position) {
     }
   });
 
-  jugada.fichas.push(ficha);
+  if (position < 10000) {
+    jugada.fichas.push(ficha);
+  }
   // console.log(jugada.fichas);
 }
 
 function enviarJugada() {
-
-
-
   jugada.fichas.sort(function (a, b) {
     if (a.espacio > b.espacio) {
       return 1;
@@ -51,7 +50,6 @@ function enviarJugada() {
   });
   var mensaje = JSON.stringify(jugada);
   websocket.send(mensaje);
-  jugada.fichas=[];
 }
 
 function dibujarJugada(mes) {
@@ -125,8 +123,6 @@ function enviarIniciar() {
 //funcion para que felipe dibuje las fichas en la maderita
 
 function mostrarFichas(mifichas) {
-
-
   for (let i = 0; i < mifichas.length; i++) {
 
     // console.log(mifichas[i].id);
@@ -152,7 +148,6 @@ function robo(mes) {
 
 function nuevaFicha(mes) {
   nueva = mes.ficha;
-  console.log(mes);
   numfichas = mes.numFichas;
   mostrarFichas(nueva);
   mifichas.push(nueva[0]);
@@ -243,4 +238,3 @@ function habilitarFichas(tipo) {
     }
   }
 }
-

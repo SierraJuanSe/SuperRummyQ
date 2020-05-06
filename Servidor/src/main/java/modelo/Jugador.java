@@ -1,9 +1,8 @@
 package modelo;
 
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import org.java_websocket.WebSocket;
 
 public class Jugador {
@@ -13,7 +12,7 @@ public class Jugador {
 	private int numFichas;
 	private int turno;
 	//private int ronda;
-	private Set<Ficha> misFichas;
+	private HashMap<String, Ficha> misFichas;
 	
 	public Jugador(String nombre, int turno, WebSocket conn) {
 		this.nombre = nombre;
@@ -21,17 +20,27 @@ public class Jugador {
 		this.setCliente(conn);
 		this.puntaje = 0;
 		this.numFichas = 0;
-		this.misFichas = new HashSet<Ficha>() ;
+		this.misFichas = new HashMap<String, Ficha>() ;
 	}
 
 	
-	public void hacerJugada() {
+	public boolean hacerJugada(ArrayList<Ficha> fichas) {
+		boolean borrados = true;
+		for (Ficha ficha : fichas) {
+			if(this.misFichas.remove(ficha.getId()) == null) {
+				borrados = false;
+			}
+		}
 		
+		return borrados;
 	}
 	
+	public Ficha getFicha(String key) {
+		return this.misFichas.get(key);
+	}
 	
-	public void robarFicha(Ficha f) {
-		this.misFichas.add(f);
+	public void robarFicha(String key,Ficha f) {
+		this.misFichas.put(key, f);
 	}
 	
 	public String getNombre() {
@@ -51,6 +60,7 @@ public class Jugador {
 	}
 
 	public int getNumFichas() {
+		this.numFichas = this.misFichas.size();
 		return numFichas;
 	}
 
@@ -67,14 +77,12 @@ public class Jugador {
 	}
 
 	
-
-
-	public Set<Ficha> getMisFichas() {
+	public HashMap<String, Ficha> getMisFichas() {
 		return misFichas;
 	}
 
 
-	public void setMisFichas(Set<Ficha> misFichas) {
+	public void setMisFichas(HashMap<String, Ficha> misFichas) {
 		this.misFichas = misFichas;
 	}
 
@@ -87,9 +95,5 @@ public class Jugador {
 	public void setCliente(WebSocket cliente) {
 		this.cliente = cliente;
 	}
-	
-	
-
-	
-	
+		
 }
