@@ -37,7 +37,7 @@ function campoCarta() {
   var top = 450;
 
   var top = 13;
-  var espaciodrop = 0;
+  var espaciodrop = 100;
   for (var j = 0; j <= 5; j++) {
     for (var i = 0; i <= 9; i++) {
       espacio = espacio + 83;
@@ -48,6 +48,7 @@ function campoCarta() {
     }
     top = top + 110;
     espacio = 220;
+    espaciodrop = 100 * (j+2);
   }
 }
 
@@ -80,7 +81,7 @@ function cartas() {
     }
   }
 
-  
+
 
 
 }
@@ -100,14 +101,19 @@ function drop(ev) {
   // ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   ev.target.appendChild(document.getElementById(data));
-  agregarJugada(data,ev.target.id);
+  var espacio = parseInt(ev.target.id.substring(7));
+  agregarJugada(data,espacio);
 
 }
 
-var cont = 40;;
+var cont = 500;
 function llevardrop(idCarta) {
   cont = cont + 1;
+  if (cont > 510) {
+    cont = cont + 100 - 10;
+  }
+
   $('#' + idCarta).removeAttr('style');
   $('#espacio' + cont).append(document.getElementById(idCarta));
+  return cont;
 }
-

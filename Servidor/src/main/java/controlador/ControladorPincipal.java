@@ -83,7 +83,7 @@ public class ControladorPincipal extends WebSocketServer{
         }else if(type.equals("iniciar")) {
         	this.partida.inicioPartida();
         }else if(type.equals("jugada")) {
-        	jugadaJugador(conn, mensaje);
+        	jugadaJugador(conn, jsonObject);
         	
         }else if(type.equals("pasar")){
         	
@@ -120,9 +120,26 @@ public class ControladorPincipal extends WebSocketServer{
 	}
 	
 	//metodo para validar y confirmar la jugada 
-	public void jugadaJugador(WebSocket conn, String info) {
-		System.out.println(info);
-		this.partida.aTodos(info, conn);
+	public void jugadaJugador(WebSocket conn, JsonObject jsonObject) {
+		System.out.println(jsonObject.get("fichas"));
+		Gson gson =  new Gson();
+		 //conversion de json a un array de fichas con id y espacio
+		FichaLLegada[] fichasllegadas = gson.fromJson(jsonObject.get("fichas"), FichaLLegada[].class);
+		ArrayList<Set<FichaLLegada>> listjugadas = new ArrayList<Set<FichaLLegada>>();
+		Set<FichaLLegada> jugada = new HashSet<FichaLLegada>();
+		jugada.add(fichasllegadas[0]);
+		
+		for (int i = 0; i < fichasllegadas.length - 1; i++) {
+			
+			/*if(fichasllegadas[i].getEspacio() + 1 == fichasllegadas[i+1].getEspacio()) {
+				jugada.add(fichasllegadas[i+1]);
+			}else {
+				listjugadas.add(jugada);
+				jugada = new HashSet<FichaLLegada>();
+			}*/
+		}
+		
+		System.out.println(listjugadas.toString());
 	}
 	
 	public void pasarTurno(WebSocket conn, JsonObject jsonObject) {
@@ -132,13 +149,14 @@ public class ControladorPincipal extends WebSocketServer{
     	Gson gson = new Gson();
     	
     	if(robo) {
-    		Ficha ficharobada = this.partida.getFicha();
-    		j.robarFicha(ficharobada);
-    		Set<Ficha> setFicha = new HashSet<Ficha>();
-    		setFicha.add(ficharobada);
+    		String  randomkey = this.partida.getFicha();
+    		Ficha f = this.partida.getBolsafichas().remove(randomkey);
+    		j.robarFicha(randomkey, f);
+    		Set<Ficha> setficha = new HashSet<Ficha>();
+    		setficha.add(j.getFicha(randomkey));
     		
-    		String jsonFicha = gson.toJson(setFicha);
-    		
+    		String jsonFicha = gson.toJson(setficha);
+    		System.out.println(jsonFicha);
     		
     		int numFichas = j.getMisFichas().size();
     		String nom = j.getNombre();
