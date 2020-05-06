@@ -5,8 +5,8 @@ var numfichas = 0;
 var mifichas = [];
 var otrosjugadores = [];
 var jugada = {
-  type : "jugada",
-  fichas : []
+  type: "jugada",
+  fichas: []
 };
 
 
@@ -24,9 +24,9 @@ function login(jugador) {
 }
 
 function agregarJugada(id, position) {
-  ficha = {id: id, espacio: position};
+  ficha = { id: id, espacio: position };
   jugada.fichas.forEach((item, i) => {
-    if(item.id == id){
+    if (item.id == id) {
       jugada.fichas.splice(i, 1);
     }
   });
@@ -36,20 +36,29 @@ function agregarJugada(id, position) {
 }
 
 function enviarJugada() {
-  var mensaje=JSON.stringify(jugada);
- console.log(mensaje);
+
+
+
+  jugada.fichas.sort(function (a, b) {
+    if (a.espacio > b.espacio) {
+      return 1;
+    }
+    if (a.espacio < b.espacio) {
+      return -1;
+    }
+    return 0
+
+  });
+  var mensaje = JSON.stringify(jugada);
   websocket.send(mensaje);
+  jugada.fichas=[];
 }
 
 function dibujarJugada(mes) {
   for (let i = 0; i < mes.fichas.length; i++) {
-    $('#'+mes.fichas[i].id ).removeAttr('style');
-       $('#'+mes.fichas[i].espacio).append(document.getElementById(mes.fichas[i].id));
-      // console.log($('#'+mes.fichas[i].id));
-      // console.log($('#'+mes.fichas[i].espacio));
+    $('#' + mes.fichas[i].id).removeAttr('style');
+    $('#espacio' + mes.fichas[i].espacio).append(document.getElementById(mes.fichas[i].id));
 
-    //  console.log(mes.fichas[i].espacio);
-    //  console.log(mes.fichas[i].id);
   }
 
 }
@@ -114,10 +123,17 @@ function enviarIniciar() {
 }
 
 //funcion para que felipe dibuje las fichas en la maderita
+
 function mostrarFichas(mifichas) {
   for (let i = 0; i < mifichas.length; i++) {
+
+    // console.log(mifichas[i].id);
     mifichas[i].espacio = llevardrop(mifichas[i].id);
+
+
   }
+  console.log(mifichas);
+
 }
 
 function robo(mes) {
@@ -136,20 +152,21 @@ function nuevaFicha(mes) {
   nueva = mes.ficha;
   numfichas = mes.numFichas;
   mostrarFichas(nueva);
+  mifichas.push(nueva[0]);
   $('#nfichasusuario').empty().append(numfichas);
 }
 
 function funTurno(mes) {
-  var tipo='';
+  var tipo = '';
   if (mes.jugador == nombre) {
     habilitarFichas('hab');
     //habilitar botones para jugar
     console.log('Es mi turno' + mes.jugador);
     $('#pinturno').css('top', '500px');
     $('#pinturno').show();
-
+    $('#pasar').show(1000);
     $('#jugar').show(1000);
-    $('#robar').prop('disabled', false);
+    // $('#robar').prop('disabled', false);
     $('#pinturno1').hide();
     $('#pinturno2').hide();
     $('#pinturno3').hide();
@@ -163,15 +180,15 @@ function funTurno(mes) {
     for (let i = 0; i < otrosjugadores.length; i++) {
 
       if (mes.jugador == otrosjugadores[i].nombre) {
-        $('#pinturno'+(i+1)).show();
+        $('#pinturno' + (i + 1)).show();
 
-    }else{
-      $('#pinturno'+(i+1)).hide();
+      } else {
+        $('#pinturno' + (i + 1)).hide();
+      }
     }
-  }
 
-     console.log('Es el turrno de ' + mes.jugador);
-    $('#robar').prop('disabled', true);
+    console.log('Es el turrno de ' + mes.jugador);
+    $('#pasar').hide(1000);
     $('#jugar').hide(1000);
 
   }
@@ -212,11 +229,11 @@ function habilitarFichas(tipo) {
         } else {
           ncarta = 'b'
         }
-         if (tipo=='hab') {
-          $('#'+nombre+ncarta).attr('draggable',true);
-         }else{
-          $('#'+nombre+ncarta).attr('draggable',false);
-         }
+        if (tipo == 'hab') {
+          $('#' + nombre + ncarta).attr('draggable', true);
+        } else {
+          $('#' + nombre + ncarta).attr('draggable', false);
+        }
 
 
       }
