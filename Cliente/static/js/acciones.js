@@ -7,6 +7,8 @@ var jugada = {
   type : "jugada",
   fichas : []
 };
+var otrosjugadores = [];
+
 
 
 function login(jugador) {
@@ -34,44 +36,62 @@ for (let i = 0; i < mifichas.length; i++) {
     if(item.id == id){
       jugada.fichas.splice(i, 1);
     }
+
   });
 
-  jugada.fichas.push(ficha);
+  if(position < 10000){
+    jugada.fichas.push(ficha);
+  }
+
+  
   // console.log(jugada.fichas);
 }
 
 function nuevajugada(mes){
+  console.log(mes);
   dibujarJugada(mes);
-  for (let i = 0; i < mes.fichas.length; i++) {
-   jugada.fichas.push(mes.fichas[i]);
-    
-  }
+  
 }
 
 
 
 
 function enviarJugada() {
+
+  jugada.fichas.sort(function (a, b) {
+    if (a.espacio > b.espacio) {
+      return 1;
+    }
+    if (a.espacio < b.espacio) {
+      return -1;
+    }
+    
+    return 0;
+  });
   var mensaje=JSON.stringify(jugada);
  console.log(mensaje);
+
+ 
   websocket.send(mensaje);
 }
 
 function dibujarJugada(mes) {
+  console.log(mes);
   for (let i = 0; i < mes.fichas.length; i++) {
     $('#'+mes.fichas[i].id ).removeAttr('style');
-       $('#'+mes.fichas[i].espacio).append(document.getElementById(mes.fichas[i].id));
+       $('#espacio'+mes.fichas[i].espacio).append(document.getElementById(mes.fichas[i].id));
       
   }
 
 }
 
 function confirmarJugada(mes){
+  console.log(mes);
 	if(mes.confirmar == true){
     robo=false;
     for (let i = 0; i < mifichas.length; i++){
       for (let j = 0; j < mes.fichas.length; j++) {
-//jugada.fichas.splice(i, 1);
+
         if(mifichas[i].id == mes.fichas[j].id){
           mifichas.splice(i,1);
         }
@@ -226,7 +246,7 @@ function funTurno(mes) {
     $('#pinturno').show();
 
     $('#jugar').show(1000);
-    $('#robar').prop('disabled', false);
+    $('#pasar').show(1000);
     $('#pinturno1').hide();
     $('#pinturno2').hide();
     $('#pinturno3').hide();
@@ -248,7 +268,7 @@ function funTurno(mes) {
   }
 
      console.log('Es el turrno de ' + mes.jugador);
-    $('#robar').prop('disabled', true);
+    $('#pasar').hide(1000);
     $('#jugar').hide(1000);
 
   }
