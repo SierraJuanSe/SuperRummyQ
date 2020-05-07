@@ -178,15 +178,20 @@ public class ControladorPincipal extends WebSocketServer{
 			}
 		}
 		
-		System.out.println("jugadas en el tablero " +tablero.getJugadas().toString());
 		if(contValidas == listJugadas.size()) {
 			System.out.println("si funciona " +j.getNumFichas());
+			String confirmacion = "{\"type\":\"confirmarJugada\", \"confirmar\":true, \"fichas\":"
+					+ jsonObject.get("fichas")+"}";
+			conn.send(confirmacion);
 			this.partida.aTodos(mensaje, conn);
+		}else {
+			String confirmacion = "{\"type\":\"confirmarJugada\", \"confirmar\":false, \"fichas\":"
+					+ jsonObject.get("fichas")+"}";
+			conn.send(confirmacion);
 		}
 		
 		
-		tablero.actualizarJugadas(jugadasActuales);
-		System.out.println("si sale");
+		//tablero.actualizarJugadas(jugadasActuales);
 		System.out.println("jugadas en el tablero " +tablero.getJugadas().toString());
 	}
 	
@@ -214,7 +219,7 @@ public class ControladorPincipal extends WebSocketServer{
     		
     	}
     	
-    	this.partida.siguienteTurno(j.getTurno());
+    	this.partida.siguienteTurno(j.getTurno(), j);
 	}
 	
 }

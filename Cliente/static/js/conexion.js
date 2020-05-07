@@ -40,7 +40,6 @@ websocket.onmessage = function DecodeMensaje(mensaje) {
     funTurno(mes);
   }else if(mes.type =='confirmarJugada'){
     confirmarJugada(mes);
-  
   }else if(mes.type == 'jugada'){
     nuevajugada(mes);
   }

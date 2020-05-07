@@ -143,8 +143,6 @@ function llevardrop(idCarta) {
       $('#' + idCarta).removeAttr('style');
       $('#espacio' + i).append(document.getElementById(idCarta));
       break;
-    } else {
-      console.log('no esta vacio');
     }
 
   }

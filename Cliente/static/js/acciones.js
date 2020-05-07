@@ -2,14 +2,12 @@ var nombre = '';
 var turno = '';
 var rol = '';
 var numfichas = 0;
-var robo =true;
+var robar = true;
 var jugada = {
-  type : "jugada",
-  fichas : []
+  type: "jugada",
+  fichas: []
 };
 var otrosjugadores = [];
-
-
 
 function login(jugador) {
   nombre = jugador;
@@ -25,92 +23,82 @@ function login(jugador) {
 }
 
 function agregarJugada(id, position) {
-  ficha = {id: id, espacio: position};
-for (let i = 0; i < mifichas.length; i++) {
-    if(mifichas[i].id == id){
-      ficha.anterior=mifichas[i].espacio;
-    }  
-}
+  ficha = {
+    id: id,
+    espacio: position
+  };
+  for (let i = 0; i < mifichas.length; i++) {
+    if (mifichas[i].id == id) {
+      ficha.anterior = mifichas[i].espacio;
+    }
+  }
 
   jugada.fichas.forEach((item, i) => {
-    if(item.id == id){
+    if (item.id == id) {
       jugada.fichas.splice(i, 1);
     }
 
   });
 
-  if(position < 10000){
+  if (position < 10000) {
     jugada.fichas.push(ficha);
   }
-
-  
   // console.log(jugada.fichas);
 }
 
-function nuevajugada(mes){
+function nuevajugada(mes) {
   console.log(mes);
   dibujarJugada(mes);
-  
 }
 
-
-
-
 function enviarJugada() {
-
-  jugada.fichas.sort(function (a, b) {
+  jugada.fichas.sort(function(a, b) {
     if (a.espacio > b.espacio) {
       return 1;
     }
     if (a.espacio < b.espacio) {
       return -1;
     }
-    
+    // a must be equal to b
     return 0;
   });
-  var mensaje=JSON.stringify(jugada);
- console.log(mensaje);
 
- 
+  var mensaje = JSON.stringify(jugada);
+  console.log(mensaje);
   websocket.send(mensaje);
 }
 
 function dibujarJugada(mes) {
   console.log(mes);
   for (let i = 0; i < mes.fichas.length; i++) {
-    $('#'+mes.fichas[i].id ).removeAttr('style');
-       $('#espacio'+mes.fichas[i].espacio).append(document.getElementById(mes.fichas[i].id));
-      
+    $('#' + mes.fichas[i].id).removeAttr('style');
+    $('#espacio' + mes.fichas[i].espacio).append(document.getElementById(mes.fichas[i].id));
   }
 
 }
 
-function confirmarJugada(mes){
+function confirmarJugada(mes) {
   console.log(mes);
-	if(mes.confirmar == true){
-    robo=false;
-    for (let i = 0; i < mifichas.length; i++){
+  if (mes.confirmar == true) {
+    robar = false;
+    for (let i = 0; i < mifichas.length; i++) {
       for (let j = 0; j < mes.fichas.length; j++) {
-
-        if(mifichas[i].id == mes.fichas[j].id){
-          mifichas.splice(i,1);
+        if (mifichas[i].id == mes.fichas[j].id) {
+          mifichas.splice(i, 1);
         }
-        
+
       }
-    
+
     }
-      
-	}else{
+
+  } else {
     //activar div de Alerta...
-    
-  
-    }
+  }
 
 }
 
-
 function registroJugador(mes) {
-	console.log(mes);
+  console.log(mes);
 
 
   var invitado = mes.jugador;
@@ -173,12 +161,11 @@ function enviarIniciar() {
 //funcion para que felipe dibuje las fichas en la maderita
 function mostrarFichas(mifichas) {
 
-
   for (let i = 0; i < mifichas.length; i++) {
 
-    mifichas[i].espacio=llevardrop(mifichas[i].id);
+    mifichas[i].espacio = llevardrop(mifichas[i].id);
     // console.log(mifichas[i].id);
-    
+
     // $('#'+m).attr('draggable',false);
 
   }
@@ -206,42 +193,41 @@ function nuevaFicha(mes) {
 }
 
 
-function setInfojugador(infoJugador){ //SE MNECESITA QUE INGRESE EL OBJETO JUGADOR QUE LO ENVIARA EL SERVER CUANDO SE CREE O SE UNA ALGUIEN,
-	                                  //ARRIBA SE DECLARO LA VARIABLE JUGADOR QUE SERA GLOBAL Y PERTENECERA A CADA CLIENTE
-	jugador={
-		nombre:infoJugador.nombre,
-		puntaje:infoJugador.puntaje,
-		numFichas:infoJugador.numFichas,
-		turno:infoJugador.turno,
-	};
+function setInfojugador(infoJugador) { //SE MNECESITA QUE INGRESE EL OBJETO JUGADOR QUE LO ENVIARA EL SERVER CUANDO SE CREE O SE UNA ALGUIEN,
+  //ARRIBA SE DECLARO LA VARIABLE JUGADOR QUE SERA GLOBAL Y PERTENECERA A CADA CLIENTE
+  jugador = {
+    nombre: infoJugador.nombre,
+    puntaje: infoJugador.puntaje,
+    numFichas: infoJugador.numFichas,
+    turno: infoJugador.turno,
+  };
 }
 
 
-function publicarStatusJugador(){  //ESTE METODO SE DEBE EJECUTAR CADA VEZ QUE EL JUGADOR TERMINE SU TURNO
-	status={
-		infoJugador:jugador,
-		type:"status"
-	};
-	var msm=JSON.stringify(status);
-	sendCard(msm);   //ESTE ES EL METODO QUE ENVIA LOS DATOS AL SERVER
+function publicarStatusJugador() { //ESTE METODO SE DEBE EJECUTAR CADA VEZ QUE EL JUGADOR TERMINE SU TURNO
+  status = {
+    infoJugador: jugador,
+    type: "status"
+  };
+  var msm = JSON.stringify(status);
+  sendCard(msm); //ESTE ES EL METODO QUE ENVIA LOS DATOS AL SERVER
 }
 
 
 //------------------------------------------------------------------------------------------------------------
 
-
-
-function ingresarJugadores(jugadorRecibido){
-	//ENTRA UN OBJETO JUGADOR,Y SE LE ASIGNA A LA ULTIMA POSICION DEL ARRAY JUGADORES
-	jugadores.push(jugadorRecibido);
+function ingresarJugadores(jugadorRecibido) {
+  //ENTRA UN OBJETO JUGADOR,Y SE LE ASIGNA A LA ULTIMA POSICION DEL ARRAY JUGADORES
+  jugadores.push(jugadorRecibido);
 }
 
 function funTurno(mes) {
-  var tipo='';
+
   if (mes.jugador == nombre) {
+    robar = true;
     habilitarFichas('hab');
     //habilitar botones para jugar
-    console.log('Es mi turno' + mes.jugador);
+    console.log('Es mi turno ' + mes.jugador);
     $('#pinturno').css('top', '500px');
     $('#pinturno').show();
 
@@ -258,28 +244,37 @@ function funTurno(mes) {
     // $('#pinturno').	css('top','14px');
     // $('#pinturno').show();
     for (let i = 0; i < otrosjugadores.length; i++) {
+      if (mes.jugador == otrosjugadores[i].nombre) {
+        $('#pinturno' + (i + 1)).show();
 
-      if (mes.jugador == otrosjugadores[i].nombre) {       
-        $('#pinturno'+(i+1)).show();
-
-    }else{
-      $('#pinturno'+(i+1)).hide();
+      } else {
+        $('#pinturno' + (i + 1)).hide();
+      }
     }
-  }
 
-     console.log('Es el turrno de ' + mes.jugador);
+    console.log('Es el turrno de ' + mes.jugador);
     $('#pasar').hide(1000);
     $('#jugar').hide(1000);
 
   }
 
+  if(mes.ant == nombre){
+    $('#nfichasusuario').empty().append(mes.numfichas);
+  }else{
+    for (let i = 0; i < otrosjugadores.length; i++) {
+      if (mes.ant == otrosjugadores[i].nombre) {
+        otrosjugadores[i].numfichas = mes.numfichas;
+      }
+    }
+    pintarNombres();
+  }
 }
 
 function enviarTurno() {
   turno = {
     type: 'pasar',
     nombre: 'nombre',
-    robo: robo
+    robo: robar
   }
 
   mensaje = JSON.stringify(turno);
@@ -309,15 +304,12 @@ function habilitarFichas(tipo) {
         } else {
           ncarta = 'b'
         }
-         if (tipo=='hab') {
-          $('#'+nombre+ncarta).attr('draggable',true);
-         }else{
-          $('#'+nombre+ncarta).attr('draggable',false);
-         }
-        
-
+        if (tipo == 'hab') {
+          $('#' + nombre + ncarta).attr('draggable', true);
+        } else {
+          $('#' + nombre + ncarta).attr('draggable', false);
+        }
       }
     }
   }
 }
-
