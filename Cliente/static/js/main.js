@@ -19,9 +19,7 @@ $('#unir').click(function () {
 
 });
 
-$('#pasar').click(function () {
-  enviarTurno();
-});
+
 
 $('#iniciar').click(function () {
   enviarIniciar();
@@ -31,7 +29,7 @@ $('#iniciar').click(function () {
 
 $('#jugar').click(function () {
   enviarJugada();
-
+ alert("prueba");
 });
 
 
