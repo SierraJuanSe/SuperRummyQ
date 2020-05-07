@@ -89,6 +89,8 @@ public class ControladorPincipal extends WebSocketServer{
         }else if(type.equals("pasar")){
         	
         	pasarTurno(conn, jsonObject);
+        }else if(type.equals("ping")) {
+        	conn.send(mensaje);
         }
         
 	}
@@ -159,11 +161,10 @@ public class ControladorPincipal extends WebSocketServer{
 				Ficha f = j.getFicha(fichaLLegada.getId());
 				if(f != null) {
 					fichas.add(f);
+				}else if((f = tablero.getFicha(fichaLLegada.getId())) != null){
+					fichas.add(f);
 				}else {
-					f = tablero.getFicha(fichaLLegada.getId());
-					if(f != null) {
-						fichas.add(f);
-					}
+					System.out.println("Se perdio la ficha " + fichaLLegada.getId());
 				}
 			}
 					
@@ -180,7 +181,7 @@ public class ControladorPincipal extends WebSocketServer{
 		
 		if(contValidas == listJugadas.size()) {
 			System.out.println("si funciona " +j.getNumFichas());
-			String confirmacion = "{\"type\":\"confirmarJugada\", \"confirmar\":true, \"numfichas\":"+j.getNumFichas()+"\"fichas\":"
+			String confirmacion = "{\"type\":\"confirmarJugada\", \"confirmar\":true, \"numfichas\":"+j.getNumFichas()+", \"fichas\":"
 					+ jsonObject.get("fichas")+"}";
 			conn.send(confirmacion);
 			this.partida.aTodos(mensaje, conn);
