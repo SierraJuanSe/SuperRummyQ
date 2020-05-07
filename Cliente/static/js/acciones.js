@@ -81,10 +81,12 @@ function confirmarJugada(mes) {
   console.log(mes);
   if (mes.confirmar == true) {
     robar = false;
+    // $('#pasar').show(1000);
     for (let i = 0; i < mifichas.length; i++) {
       for (let j = 0; j < mes.fichas.length; j++) {
         if (mifichas[i].id == mes.fichas[j].id) {
           mifichas.splice(i, 1);
+         
         }
 
       }
@@ -92,7 +94,9 @@ function confirmarJugada(mes) {
     }
 
   } else {
-    //activar div de Alerta...
+    $('#alerta').show(1000);
+    $('#alerta').hide(10000);
+    // $('#pasar').hide(1000);
   }
 
 }

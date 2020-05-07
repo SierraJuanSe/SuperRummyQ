@@ -31,8 +31,7 @@ $('#iniciar').click(function () {
 
 $('#jugar').click(function () {
   enviarJugada();
-  $('#alerta').show(1000);
-  $('#alerta').hide(10000);
+
 });
 
 
