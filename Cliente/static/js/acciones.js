@@ -222,7 +222,6 @@ function ingresarJugadores(jugadorRecibido) {
 }
 
 function funTurno(mes) {
-
   if (mes.jugador == nombre) {
     robar = true;
     habilitarFichas('hab');
