@@ -23,6 +23,16 @@ function login(jugador) {
 
 }
 
+
+function ganador(mes){
+if(numfichas ==0){
+  //Alerta Ganador
+}
+
+}
+
+
+
 function agregarJugada(id, position) {
   ficha = {
     id: id,
@@ -61,7 +71,6 @@ function nuevajugada(mes) {
     }
     jugada.fichas.push(ficha);
   }
-  console.log("nuevas jugadas");
   console.log(jugada.fichas);
 }
 
@@ -97,22 +106,23 @@ function confirmarJugada(mes) {
       robar = false;
     }
     // $('#pasar').show(1000);
-    for (let i = 0; i < mifichas.length; i++) {
-      for (let j = 0; j < mes.fichas.length; j++) {
-        if (mifichas[i].id == mes.fichas[j].id) {
-          mifichas.splice(i, 1);
+    // for (let i = 0; i < mifichas.length; i++) {
+    //   for (let j = 0; j < mes.fichas.length; j++) {
+    //     if (mifichas[i].id == mes.fichas[j].id) {
+    //       mifichas.splice(i, 1);
 
-        }
+    //     }
 
-      }
+    //   }
 
-    }
-
+    //  }
+    enviarTurno();
   } else {
     $('#alerta').show(1000);
     $('#alerta').hide(10000);
     // $('#pasar').hide(1000);
   }
+  
 
 }
 
@@ -250,7 +260,6 @@ function funTurno(mes) {
     $('#pinturno').show();
 
     $('#jugar').show(1000);
-    $('#pasar').show(1000);
     $('#pinturno1').hide();
     $('#pinturno2').hide();
     $('#pinturno3').hide();
@@ -271,7 +280,6 @@ function funTurno(mes) {
     }
 
     console.log('Es el turrno de ' + mes.jugador);
-    $('#pasar').hide(1000);
     $('#jugar').hide(1000);
 
   }

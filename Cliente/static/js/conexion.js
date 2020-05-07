@@ -42,6 +42,8 @@ websocket.onmessage = function DecodeMensaje(mensaje) {
     confirmarJugada(mes);
   }else if(mes.type == 'jugada'){
     nuevajugada(mes);
+  }else if(mes.type == 'ganador'){
+    ganador(mes);
   }
 }
 
