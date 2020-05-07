@@ -7,6 +7,7 @@ var jugada = {
   type: "jugada",
   fichas: []
 };
+
 var otrosjugadores = [];
 
 function login(jugador) {
@@ -43,12 +44,25 @@ function agregarJugada(id, position) {
   if (position < 10000) {
     jugada.fichas.push(ficha);
   }
-  // console.log(jugada.fichas);
+  console.log("agregar jugadas");
+  console.log(jugada.fichas);
 }
 
 function nuevajugada(mes) {
   console.log(mes);
   dibujarJugada(mes);
+
+  for (var i = 0; i < mes.fichas.length; i++) {
+    let ficha = mes.fichas[i];
+    for (var j = 0; j < jugada.fichas.length; j++) {
+      if(jugada.fichas[j].id == ficha.id){
+        jugada.fichas.splice(j, 1);
+      }
+    }
+    jugada.fichas.push(ficha);
+  }
+  console.log("nuevas jugadas");
+  console.log(jugada.fichas);
 }
 
 function enviarJugada() {
@@ -64,7 +78,6 @@ function enviarJugada() {
   });
 
   var mensaje = JSON.stringify(jugada);
-  console.log(mensaje);
   websocket.send(mensaje);
 }
 
@@ -80,13 +93,15 @@ function dibujarJugada(mes) {
 function confirmarJugada(mes) {
   console.log(mes);
   if (mes.confirmar == true) {
-    robar = false;
+    if(mes.numfichas < numfichas){
+      robar = false;
+    }
     // $('#pasar').show(1000);
     for (let i = 0; i < mifichas.length; i++) {
       for (let j = 0; j < mes.fichas.length; j++) {
         if (mifichas[i].id == mes.fichas[j].id) {
           mifichas.splice(i, 1);
-         
+
         }
 
       }
@@ -262,6 +277,7 @@ function funTurno(mes) {
   }
 
   if(mes.ant == nombre){
+    numfichas = mes.numfichas;
     $('#nfichasusuario').empty().append(mes.numfichas);
   }else{
     for (let i = 0; i < otrosjugadores.length; i++) {

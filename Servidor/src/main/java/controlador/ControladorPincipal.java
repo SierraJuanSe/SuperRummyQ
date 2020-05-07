@@ -180,7 +180,7 @@ public class ControladorPincipal extends WebSocketServer{
 		
 		if(contValidas == listJugadas.size()) {
 			System.out.println("si funciona " +j.getNumFichas());
-			String confirmacion = "{\"type\":\"confirmarJugada\", \"confirmar\":true, \"fichas\":"
+			String confirmacion = "{\"type\":\"confirmarJugada\", \"confirmar\":true, \"numfichas\":"+j.getNumFichas()+"\"fichas\":"
 					+ jsonObject.get("fichas")+"}";
 			conn.send(confirmacion);
 			this.partida.aTodos(mensaje, conn);
