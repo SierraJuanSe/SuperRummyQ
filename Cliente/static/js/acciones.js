@@ -2,13 +2,12 @@ var nombre = '';
 var turno = '';
 var rol = '';
 var numfichas = 0;
-var robo = true;
+var robar = true;
 var jugada = {
   type: "jugada",
   fichas: []
 };
 var otrosjugadores = [];
-
 
 function login(jugador) {
   nombre = jugador;
@@ -24,7 +23,10 @@ function login(jugador) {
 }
 
 function agregarJugada(id, position) {
-  ficha = { id: id, espacio: position };
+  ficha = {
+    id: id,
+    espacio: position
+  };
   for (let i = 0; i < mifichas.length; i++) {
     if (mifichas[i].id == id) {
       ficha.anterior = mifichas[i].espacio;
@@ -41,28 +43,16 @@ function agregarJugada(id, position) {
   if (position < 10000) {
     jugada.fichas.push(ficha);
   }
-
   // console.log(jugada.fichas);
 }
 
 function nuevajugada(mes) {
   console.log(mes);
   dibujarJugada(mes);
-
-
-
-
-
-
-
-
 }
 
-
-
-
 function enviarJugada() {
-  jugada.fichas.sort(function (a, b) {
+  jugada.fichas.sort(function(a, b) {
     if (a.espacio > b.espacio) {
       return 1;
     }
@@ -90,10 +80,9 @@ function dibujarJugada(mes) {
 function confirmarJugada(mes) {
   console.log(mes);
   if (mes.confirmar == true) {
-    robo = false;
+    robar = false;
     for (let i = 0; i < mifichas.length; i++) {
       for (let j = 0; j < mes.fichas.length; j++) {
-        //jugada.fichas.splice(i, 1);
         if (mifichas[i].id == mes.fichas[j].id) {
           mifichas.splice(i, 1);
         }
@@ -104,12 +93,9 @@ function confirmarJugada(mes) {
 
   } else {
     //activar div de Alerta...
-
-
   }
 
 }
-
 
 function registroJugador(mes) {
   console.log(mes);
@@ -175,7 +161,6 @@ function enviarIniciar() {
 //funcion para que felipe dibuje las fichas en la maderita
 function mostrarFichas(mifichas) {
 
-
   for (let i = 0; i < mifichas.length; i++) {
 
     mifichas[i].espacio = llevardrop(mifichas[i].id);
@@ -219,19 +204,17 @@ function setInfojugador(infoJugador) { //SE MNECESITA QUE INGRESE EL OBJETO JUGA
 }
 
 
-function publicarStatusJugador() {  //ESTE METODO SE DEBE EJECUTAR CADA VEZ QUE EL JUGADOR TERMINE SU TURNO
+function publicarStatusJugador() { //ESTE METODO SE DEBE EJECUTAR CADA VEZ QUE EL JUGADOR TERMINE SU TURNO
   status = {
     infoJugador: jugador,
     type: "status"
   };
   var msm = JSON.stringify(status);
-  sendCard(msm);   //ESTE ES EL METODO QUE ENVIA LOS DATOS AL SERVER
+  sendCard(msm); //ESTE ES EL METODO QUE ENVIA LOS DATOS AL SERVER
 }
 
 
 //------------------------------------------------------------------------------------------------------------
-
-
 
 function ingresarJugadores(jugadorRecibido) {
   //ENTRA UN OBJETO JUGADOR,Y SE LE ASIGNA A LA ULTIMA POSICION DEL ARRAY JUGADORES
@@ -239,11 +222,11 @@ function ingresarJugadores(jugadorRecibido) {
 }
 
 function funTurno(mes) {
-  var tipo = '';
   if (mes.jugador == nombre) {
+    robar = true;
     habilitarFichas('hab');
     //habilitar botones para jugar
-    console.log('Es mi turno' + mes.jugador);
+    console.log('Es mi turno ' + mes.jugador);
     $('#pinturno').css('top', '500px');
     $('#pinturno').show();
 
@@ -260,7 +243,6 @@ function funTurno(mes) {
     // $('#pinturno').	css('top','14px');
     // $('#pinturno').show();
     for (let i = 0; i < otrosjugadores.length; i++) {
-
       if (mes.jugador == otrosjugadores[i].nombre) {
         $('#pinturno' + (i + 1)).show();
 
@@ -275,13 +257,23 @@ function funTurno(mes) {
 
   }
 
+  if(mes.ant == nombre){
+    $('#nfichasusuario').empty().append(mes.numfichas);
+  }else{
+    for (let i = 0; i < otrosjugadores.length; i++) {
+      if (mes.ant == otrosjugadores[i].nombre) {
+        otrosjugadores[i].numfichas = mes.numfichas;
+      }
+    }
+    pintarNombres();
+  }
 }
 
 function enviarTurno() {
   turno = {
     type: 'pasar',
     nombre: 'nombre',
-    robo: robo
+    robo: robar
   }
 
   mensaje = JSON.stringify(turno);
@@ -316,10 +308,7 @@ function habilitarFichas(tipo) {
         } else {
           $('#' + nombre + ncarta).attr('draggable', false);
         }
-
-
       }
     }
   }
 }
-
