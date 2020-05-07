@@ -23,6 +23,16 @@ function login(jugador) {
 
 }
 
+
+function ganador(mes){
+if(numfichas ==0){
+  //Alerta Ganador
+}
+
+}
+
+
+
 function agregarJugada(id, position) {
   ficha = {
     id: id,
