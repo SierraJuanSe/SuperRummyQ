@@ -86,17 +86,16 @@ public class Partida {
 	/*
 	 * Acciones para el paso del turno
 	 */
-	public void siguienteTurno(int turno) {
+	public void siguienteTurno(int turno, Jugador anterior) {
 		int siguienteT = turno + 1;
 		
 		if(siguienteT > this.jugadores.size()) {
 			siguienteT = 1;
 		}
-		
 		String info = null;
 		for (Jugador j : this.jugadores.values()) {
 			if(j.getTurno() == siguienteT) {
-				info = "{\"type\":\"turno\", \"jugador\":\""+j.getNombre()+"\", \"Turno\":"+ j.getTurno() +"}";
+				info = "{\"type\":\"turno\", \"jugador\":\""+j.getNombre()+"\", \"Turno\":"+ j.getTurno() +", \"ant\":\""+anterior.getNombre()+"\",\"numfichas\":"+anterior.getNumFichas()+"}";
 			}
 		}
 		
