@@ -125,9 +125,16 @@ public class ControladorPincipal extends WebSocketServer{
 	//metodo para validar y confirmar la jugada 
 	public void jugadaJugador(WebSocket conn, JsonObject jsonObject, String mensaje) {
 		Gson gson =  new Gson();
+		Jugador j = this.partida.getJugador(null, conn);
 		int contValidas = 0; //contador para confirmar que todos los movimientos sean validos
 		 //conversion de json a un array de fichas con id y espacio
 		FichaLLegada[] fichasllegadas = gson.fromJson(jsonObject.get("fichas"), FichaLLegada[].class);
+		
+		if(fichasllegadas.length <= 0) {
+			String confirmacion = "{\"type\":\"confirmarJugada\", \"confirmar\":true, \"numfichas\":"+j.getNumFichas()+", \"fichas\":"
+					+ jsonObject.get("fichas")+"}";
+			conn.send(confirmacion);
+		}
 		
 		//array con las posibles jugadas
 		ArrayList<ArrayList<FichaLLegada>> listJugadas = new ArrayList<ArrayList<FichaLLegada>>();
@@ -153,7 +160,7 @@ public class ControladorPincipal extends WebSocketServer{
 		System.out.println(listJugadas.toString());
 		//validacion de las n jugadas recividas que se encuentran en el tablero
 		ArrayList<String> jugadasActuales =  new ArrayList<String>();
-		Jugador j = this.partida.getJugador(null, conn);
+		
 		Tablero tablero = this.partida.getTablero();
 		for (int i = 0; i < listJugadas.size(); i++) {
 			ArrayList<Ficha> fichas = new ArrayList<Ficha>();
