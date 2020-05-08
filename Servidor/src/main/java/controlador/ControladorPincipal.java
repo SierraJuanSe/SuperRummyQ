@@ -20,13 +20,15 @@ import modelo.Partida;
 import modelo.Tablero;
 
 public class ControladorPincipal extends WebSocketServer{
-	//private int port;
+	private int port;
 	private Partida partida;
 	private ArrayList<WebSocket> conectados;
 	
 	public ControladorPincipal(int port) {
 		super(new InetSocketAddress(port));
 		this.partida = new Partida(port);
+		this.partida.setStado("espera");
+		this.port = port;
 	}
 
 	@Override
@@ -36,7 +38,6 @@ public class ControladorPincipal extends WebSocketServer{
 			System.out.println("Conectado: " + conn.getRemoteSocketAddress());
 			this.conectados.add(conn);
 		}else {
-			
 			conn.close();
 		}
 	}
@@ -46,6 +47,11 @@ public class ControladorPincipal extends WebSocketServer{
 		this.conectados.remove(conn);
 		if(this.partida.removeJugador(null, conn) != null) {
 			System.out.println("Borrado de los jugadores");
+		}
+		
+		if(this.partida.getJugadores().size() <= 0) {
+			System.out.println("iniciando nueva partida");
+			this.partida = new Partida(this.port);
 		}
 	}
 
@@ -83,6 +89,7 @@ public class ControladorPincipal extends WebSocketServer{
         	
         }else if(type.equals("iniciar")) {
         	this.partida.inicioPartida();
+        	this.partida.setStado("iniciada");
         }else if(type.equals("jugada")) {
         	jugadaJugador(conn, jsonObject, mensaje);
         	
@@ -95,39 +102,59 @@ public class ControladorPincipal extends WebSocketServer{
         
 	}
 	
-	//metodo para registrar jugadores en la partidad
+	//metodo para registrar jugadores en la partida
 	public void registroJugador(WebSocket conn, JsonObject jsonObject) {
-		String nombre = jsonObject.get("nombre").toString().replace("\"", "");
-		Jugador nuevoJ = this.partida.insertJugador(nombre, conn);
-		String rol = "invitado";
-		String info = "{\"type\":\"registro\", \"jugador\":\""+nombre+"\", \"rol\":\""+rol+"\"}";
-    	if(nuevoJ != null) { //el jugador ha sido anadido
-    		for (Jugador j : this.partida.getJugadores().values()) {
-    			rol = "invitado";
-				if(j.getTurno() == 1) {
-					rol = "lider";
+		if(!this.partida.getStado().equals("iniciada")) {
+			String nombre = jsonObject.get("nombre").toString().replace("\"", "");
+			Jugador nuevoJ = this.partida.insertJugador(nombre, conn);
+			String rol = "invitado";
+			String info = "{\"type\":\"registro\", \"jugador\":\""+nombre+"\", \"rol\":\""+rol+"\"}";
+	    	if(nuevoJ != null) { //el jugador ha sido anadido
+	    		for (Jugador j : this.partida.getJugadores().values()) {
+	    			rol = "invitado";
+					if(j.getTurno() == 1) {
+						rol = "lider";
+					}
+					info = "{\"type\":\"registro\", \"jugador\":\""+j.getNombre()+"\", \"rol\":\""+rol+"\"}";
+					nuevoJ.getCliente().send(info);
 				}
-				info = "{\"type\":\"registro\", \"jugador\":\""+j.getNombre()+"\", \"rol\":\""+rol+"\"}";
-				nuevoJ.getCliente().send(info);
-			}
-    		
-    		if(nuevoJ.getTurno() == 1) {
-    			rol = "lider";
-    		}else {
-    			rol = "invitado";
-    		}
-    		
-    		info = "{\"type\":\"registro\", \"jugador\":\""+nuevoJ.getNombre()+"\", \"rol\":\""+rol+"\"}";
-    		this.partida.aTodos(info, nuevoJ.getCliente());
-    	}
+	    		
+	    		if(nuevoJ.getTurno() == 1) {
+	    			rol = "lider";
+	    		}else {
+	    			rol = "invitado";
+	    		}
+	    		
+	    		info = "{\"type\":\"registro\", \"jugador\":\""+nuevoJ.getNombre()+"\", \"rol\":\""+rol+"\"}";
+	    		this.partida.aTodos(info, nuevoJ.getCliente());
+	    	}else {
+	    		rol = "no-aceptado";
+	    		info = "{\"type\":\"registro\", \"jugador\":\""+nombre+"\", \"rol\":\""+rol+"\"}";
+	    		conn.send(info);
+	    	}
+	    	
+		}else {
+			String rol = "partida-iniciada";
+    		String info = "{\"type\":\"registro\", \"rol\":\""+rol+"\"}";
+    		conn.send(info);
+		}
+		
 	}
 	
 	//metodo para validar y confirmar la jugada 
 	public void jugadaJugador(WebSocket conn, JsonObject jsonObject, String mensaje) {
 		Gson gson =  new Gson();
+		Jugador j = this.partida.getJugador(null, conn);
 		int contValidas = 0; //contador para confirmar que todos los movimientos sean validos
 		 //conversion de json a un array de fichas con id y espacio
 		FichaLLegada[] fichasllegadas = gson.fromJson(jsonObject.get("fichas"), FichaLLegada[].class);
+		
+		//si no hay jugadas que pase y robe
+		if(fichasllegadas.length <= 0) {
+			String confirmacion = "{\"type\":\"confirmarJugada\", \"confirmar\":true, \"numfichas\":"+j.getNumFichas()+", \"fichas\":"
+					+ jsonObject.get("fichas")+"}";
+			conn.send(confirmacion);
+		}
 		
 		//array con las posibles jugadas
 		ArrayList<ArrayList<FichaLLegada>> listJugadas = new ArrayList<ArrayList<FichaLLegada>>();
@@ -153,7 +180,7 @@ public class ControladorPincipal extends WebSocketServer{
 		System.out.println(listJugadas.toString());
 		//validacion de las n jugadas recividas que se encuentran en el tablero
 		ArrayList<String> jugadasActuales =  new ArrayList<String>();
-		Jugador j = this.partida.getJugador(null, conn);
+		
 		Tablero tablero = this.partida.getTablero();
 		for (int i = 0; i < listJugadas.size(); i++) {
 			ArrayList<Ficha> fichas = new ArrayList<Ficha>();
@@ -163,8 +190,11 @@ public class ControladorPincipal extends WebSocketServer{
 					fichas.add(f);
 				}else if((f = tablero.getFicha(fichaLLegada.getId())) != null){
 					fichas.add(f);
+				}else if((f = tablero.fichaSuelta(fichaLLegada.getId()))!= null){
+					fichas.add(f);
+					
 				}else {
-					System.out.println("Se perdio la ficha " + fichaLLegada.getId());
+					System.out.println("Se perdio la ficha " + fichaLLegada.getId()+ " numero de fichas en el tablero: "+ tablero.contarficha());
 				}
 			}
 					
@@ -175,6 +205,7 @@ public class ControladorPincipal extends WebSocketServer{
 				contValidas ++;
 				jugadasActuales.add(id);
 			}else {
+				tablero.getFichasSueltas().addAll(fichas);
 				System.out.println("no funciona :(" + id);
 			}
 		}
@@ -192,7 +223,7 @@ public class ControladorPincipal extends WebSocketServer{
 		}
 		
 		
-		//tablero.actualizarJugadas(jugadasActuales);
+		tablero.actualizarJugadas(jugadasActuales);
 		System.out.println("jugadas en el tablero " +tablero.getJugadas().toString());
 	}
 	

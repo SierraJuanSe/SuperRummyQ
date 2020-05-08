@@ -11,18 +11,16 @@ $('#unir').click(function () {
   var nombre = $('#nombre').val();
   login(nombre);
 
-  //mostrar / esconder inicio
-  $('#menu').hide(500);
-  $('#tablero').show(500);
-  cartas();
-
-
 });
 
 
 
 $('#iniciar').click(function () {
-  enviarIniciar();
+  if(otrosjugadores.length >=1){
+    enviarIniciar();
+  }else{
+    alert("faltan jugadores");
+  }
 });
 
 
@@ -101,10 +99,6 @@ function cartas() {
       }
     }
   }
-
-
-
-
 }
 
 
