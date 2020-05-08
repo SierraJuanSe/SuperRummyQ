@@ -41,10 +41,9 @@ public class Tablero {
 	
 	public Ficha getFicha(String id) {
 		for (Jugada jugadas : this.jugadas.values()) {
-			for(int i = 0 ; i < jugadas.getFichas().size() ; i++) {
-				if(jugadas.getFichas().get(i).getId().equals(id)){
-					 return jugadas.getFichas().get(i);
-				}
+			Ficha f = jugadas.getFicha(id);
+			if(f != null) {
+				return f;
 			}
 		}
 		

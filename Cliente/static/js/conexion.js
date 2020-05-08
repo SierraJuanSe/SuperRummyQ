@@ -14,13 +14,16 @@ websocket.onopen = function (evt) {
 
 websocket.onerror = function (evt) {
   console.log("oho!.. error:" + evt.data);
+  $('#tablero').hide(500);
+  $('#menu').show(500);
 };
 
 
 websocket.onclose = function (evt) {
   console.log("--Desconectado--" + evt.data);
   websocket.close();
-  $(tablero.hide())
+  $('#tablero').hide(500);
+  $('#menu').show(500);
 };
 
 

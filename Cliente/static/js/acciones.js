@@ -25,8 +25,10 @@ function login(jugador) {
 
 
 function ganador(mes) {
-  if (numfichas == 0) {
-    //Alerta Ganador
+  if (mes.numfichas == 0) {
+    $('#nGanador').append(' '+mes.ganador);
+    $('#modalGanador').modal();
+    $('#modalGanador').modal('open');
   }
 
 }

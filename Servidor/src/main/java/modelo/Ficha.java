@@ -38,9 +38,11 @@ public class Ficha {
 		this.valor = valor;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "{'color': '"+this.color+"', 'valor': '"+this.valor+"'}";
+		return "Ficha [id=" + id + "]";
 	}
 
 	public String getId() {

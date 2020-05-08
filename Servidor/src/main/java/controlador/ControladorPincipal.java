@@ -176,15 +176,17 @@ public class ControladorPincipal extends WebSocketServer{
 			listJugadas.add(jugada);
 		}
 		
-		System.out.println("jugadas recividas "+listJugadas.size());
+		System.out.println("\njugadas recividas "+listJugadas.size());
 		System.out.println(listJugadas.toString());
 		//validacion de las n jugadas recividas que se encuentran en el tablero
 		ArrayList<String> jugadasActuales =  new ArrayList<String>();
 		
 		Tablero tablero = this.partida.getTablero();
+		System.out.println("jugadas en el tablero antes" +tablero.getJugadas().toString());
 		for (int i = 0; i < listJugadas.size(); i++) {
 			ArrayList<Ficha> fichas = new ArrayList<Ficha>();
 			for (FichaLLegada fichaLLegada : listJugadas.get(i)) {
+				
 				Ficha f = j.getFicha(fichaLLegada.getId());
 				if(f != null) {
 					fichas.add(f);
@@ -192,9 +194,18 @@ public class ControladorPincipal extends WebSocketServer{
 					fichas.add(f);
 				}else if((f = tablero.fichaSuelta(fichaLLegada.getId()))!= null){
 					fichas.add(f);
-					
 				}else {
 					System.out.println("Se perdio la ficha " + fichaLLegada.getId()+ " numero de fichas en el tablero: "+ tablero.contarficha());
+					String id = fichaLLegada.getId();
+					String color = id.substring(0, 1);
+					int valor;
+					if(id.length()<4) {
+						valor = Integer.valueOf(id.substring(1, 2));
+					}else {
+						valor = Integer.valueOf(id.substring(1, 3));
+					}
+					f = new Ficha(id, color, valor);
+					fichas.add(f);
 				}
 			}
 					
