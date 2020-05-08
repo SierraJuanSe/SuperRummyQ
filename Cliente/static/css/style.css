@@ -1,1 +1,119 @@
-/*Estilos de la web*/
+
+#tablero{
+  background-image: url(../images/tablero.png);
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: none;
+  overflow-x:hidden;
+  overflow-y:hidden;
+}
+
+.modal-overlay{
+  display:none !important;
+}
+
+.material-icons.md-195 { font-size: 78px; }
+
+
+#menu{
+  background-image: url(../images/Inicio1.png);
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
+.font-cover{
+  /*cubra toda la pantalla*/
+  background-size: cover;
+    /*no se repita la imagen de fondo*/
+  background-repeat: no-repeat;
+     /*que la imagen se fija*/
+  background-attachment: fixed;
+  background-position: center;
+
+  /*background-color: #F5F5F5;*/
+}
+
+.boton{
+  padding: 355px;float:inline-end;width: 380px;
+}
+
+
+#gondola{
+  position:fixed;
+  width:160px;
+  Height:70px; 
+  top: 450px;
+   left: 290px;
+}
+
+#jugar{
+  position:fixed;
+  width:90px;
+  Height:90px;
+  top: 450px;
+  left: 1190px;
+}
+
+#pasar{
+  position:fixed;
+  width:90px;
+  Height:90px;
+  top: 550px;
+  left: 1190px;
+}
+
+#prueba{
+  width:190px;
+  Height:190px;
+background-color:red;
+overflow-y: scroll
+
+}
+
+#espaciosTablero{
+  position: absolute;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 80%;
+  height: 65%;
+  left: 20%;
+  top: 12px;
+  
+}
+
+#espaciogondola{
+  position: absolute;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  width: 63%;
+  height: 30%;
+  left: 20%;
+  top: 459px;
+
+}
+
+#robo{
+  position:fixed;
+  top: 570px;
+  left: 1176px;
+}
+
+
+.carta{
+  width:95px;
+  height:105px;
+}
+
+#pintarturnos{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left:100px ;
+  top: 100 px ;
+}
