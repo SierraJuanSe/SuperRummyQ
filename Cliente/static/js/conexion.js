@@ -1,4 +1,4 @@
-var wsUri = "ws://25.133.188.152:30000";
+var wsUri = "ws://25.133.208.104:30000";
 var websocket = new WebSocket(wsUri);
 var nombrejugador = '';
 
@@ -9,6 +9,7 @@ var nombrejugador = '';
 
 websocket.onopen = function (evt) {
   console.log("--Conectado--");
+  ping();
 };
 
 websocket.onerror = function (evt) {
@@ -19,6 +20,7 @@ websocket.onerror = function (evt) {
 websocket.onclose = function (evt) {
   console.log("--Desconectado--" + evt.data);
   websocket.close();
+  $(tablero.hide())
 };
 
 

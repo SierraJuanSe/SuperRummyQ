@@ -11,25 +11,21 @@ $('#unir').click(function () {
   var nombre = $('#nombre').val();
   login(nombre);
 
-  //mostrar / esconder inicio
-  $('#menu').hide(500);
-  $('#tablero').show(500);
-  cartas();
-
-
 });
 
 
 
 $('#iniciar').click(function () {
-  enviarIniciar();
-
+  if(otrosjugadores.length >=1){
+    enviarIniciar();
+  }else{
+    alert("faltan jugadores");
+  }
 });
 
 
 $('#jugar').click(function () {
   enviarJugada();
- alert("prueba");
 });
 
 
@@ -103,10 +99,6 @@ function cartas() {
       }
     }
   }
-
-
-
-
 }
 
 
@@ -123,13 +115,17 @@ function drag(ev) {
 function drop(ev) {
   // ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
+   ev.target.appendChild(document.getElementById(data));
   var posicion = parseInt(ev.target.id.substring(7));
-  agregarJugada(data, posicion);
+
+    agregarJugada(data, posicion);
+
+
 
 }
 
 function llevardrop(idCarta) {
+
   var cont;
   var b = ($("#a").html());
   for (let i = 10000; i < 10022; i++) {
@@ -139,6 +135,7 @@ function llevardrop(idCarta) {
       //  console.log('Esta vacio');
       $('#' + idCarta).removeAttr('style');
       $('#espacio' + i).append(document.getElementById(idCarta));
+
       break;
     }
 
