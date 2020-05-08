@@ -6,9 +6,13 @@ import java.util.Iterator;
 
 public class Tablero {
 	private HashMap<String, Jugada> jugadas;
-
+	private int fichasTablero;
+	ArrayList<Ficha> fichasSueltas;
+	
 	public Tablero() {
 		this.jugadas = new HashMap<String, Jugada>();
+		this.fichasSueltas = new ArrayList<Ficha>();
+		this.fichasTablero = 0;
 	}
 	
 	public boolean insertJugada(String id, ArrayList<Ficha> fichas) {
@@ -47,6 +51,17 @@ public class Tablero {
 		return null;
 	}
 	
+	public Ficha fichaSuelta(String id) {
+		for (Ficha ficha : this.fichasSueltas) {
+			if(ficha.getId().equals(id)) {
+				this.fichasSueltas.remove(ficha);
+				return ficha;
+			}
+		}
+		
+		return null;
+	}
+	
 	public void actualizarJugadas(ArrayList<String> jugadasActuales) {
 		Iterator<String> it = this.jugadas.keySet().iterator();
 		
@@ -73,6 +88,15 @@ public class Tablero {
 		return null;
 	}
 	
+	public int contarficha() {
+		int contar = 0;
+		for (Jugada jugada : this.jugadas.values()) {
+			contar += jugada.getFichas().size();
+		}
+		
+		this.fichasTablero = contar;
+		return this.fichasTablero;
+	}
 	public Jugada buscarJugada(String id) {
 		return this.jugadas.get(id);
 	}
@@ -83,5 +107,15 @@ public class Tablero {
 
 	public void setJugadas(HashMap<String, Jugada> jugadas) {
 		this.jugadas = jugadas;
-	}	
+	}
+
+	public ArrayList<Ficha> getFichasSueltas() {
+		return fichasSueltas;
+	}
+
+	public void setFichasSueltas(ArrayList<Ficha> fichasSueltas) {
+		this.fichasSueltas = fichasSueltas;
+	}
+	
+	
 }

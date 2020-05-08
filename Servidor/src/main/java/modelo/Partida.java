@@ -56,6 +56,26 @@ public class Partida {
 		return null;
 	}
 	
+	public String comprobarGanador() {
+		String ganador = null;
+		int numfichas = 14;
+		for (Jugador jugador : this.jugadores.values()) {
+			
+			if(jugador.getNumFichas() <= 0) {
+				ganador = jugador.getNombre();
+				numfichas = jugador.getNumFichas();
+			}
+		}
+		String info;
+		if(ganador != null && numfichas <= 0) {
+			info = "{\"type\":\"ganador\", \"ganador\":\""+ganador+"\",\"numfichas\":"+numfichas+"}";
+		}else {
+			info = null;
+		}
+		
+		return info;
+		
+	}
 	/*
 	 * Acciones para el inicio de la partida
 	 */
@@ -98,8 +118,12 @@ public class Partida {
 				info = "{\"type\":\"turno\", \"jugador\":\""+j.getNombre()+"\", \"Turno\":"+ j.getTurno() +", \"ant\":\""+anterior.getNombre()+"\",\"numfichas\":"+anterior.getNumFichas()+"}";
 			}
 		}
-		
-		aTodos(info);
+		String ganador = comprobarGanador();
+		if(ganador != null) {
+			aTodos(ganador);
+		}else {
+			aTodos(info);
+		}
 	}
 	
 	//mensaje a todos los jugadores
