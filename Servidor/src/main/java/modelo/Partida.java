@@ -46,7 +46,7 @@ public class Partida {
 		return null;
 	}
 	
-	//retirnar un jugadro por nombre o por conexion
+	//retirnar un jugador por nombre o por conexion
 	public Jugador getJugador(String nombre, WebSocket conn) {
 		for (Jugador j : this.jugadores.values()) {
 			if(j.getNombre().equals(nombre) || j.getCliente().equals(conn)) {
