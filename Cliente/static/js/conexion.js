@@ -1,4 +1,4 @@
-var wsUri = "ws://localhost:30000";
+var wsUri = "ws://25.133.208.104:30000";
 var websocket = new WebSocket(wsUri);
 var nombrejugador = '';
 
@@ -14,12 +14,16 @@ websocket.onopen = function (evt) {
 
 websocket.onerror = function (evt) {
   console.log("oho!.. error:" + evt.data);
+  $('#tablero').hide(500);
+  $('#menu').show(500);
 };
 
 
 websocket.onclose = function (evt) {
   console.log("--Desconectado--" + evt.data);
   websocket.close();
+  $('#tablero').hide(500);
+  $('#menu').show(500);
 };
 
 
