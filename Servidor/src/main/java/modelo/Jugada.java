@@ -31,20 +31,20 @@ public abstract class Jugada {
 		return false;
 	}
 	
-	public boolean removeFicha(Ficha f) {
+	/*public boolean removeFicha(Ficha f) {
 		Ficha ficha = getFicha(f);
 		if(ficha != null) {
 			return this.fichas.remove(ficha);
 		}
 		return false;
-	}
+	}*/
 	
-	public Ficha getFicha(Ficha f){
+	public Ficha getFicha(String id){
 		Iterator<Ficha> ficha = this.fichas.iterator();
 		
 		while(ficha.hasNext()) {
 			Ficha fich =  ficha.next();
-			if(fich.igual(f)) {
+			if(fich.getId().equals(id)) {
 				return fich;
 			}
 		}
@@ -79,5 +79,11 @@ public abstract class Jugada {
 		}
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return ", Jugada [ fichas=" + fichas + "]";
+	}
+	
 	
 }
