@@ -195,7 +195,6 @@ public class ControladorPincipal extends WebSocketServer{
 				}else if((f = tablero.fichaSuelta(fichaLLegada.getId()))!= null){
 					fichas.add(f);
 				}else {
-					System.out.println("Se perdio la ficha " + fichaLLegada.getId()+ " numero de fichas en el tablero: "+ tablero.contarficha());
 					String id = fichaLLegada.getId();
 					String color = id.substring(0, 1);
 					int valor;
