@@ -23,13 +23,11 @@ $('#unir').click(function () {
 
 $('#iniciar').click(function () {
   enviarIniciar();
-
 });
 
 
 $('#jugar').click(function () {
   enviarJugada();
- alert("prueba");
 });
 
 
@@ -123,13 +121,17 @@ function drag(ev) {
 function drop(ev) {
   // ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
+   ev.target.appendChild(document.getElementById(data));
   var posicion = parseInt(ev.target.id.substring(7));
-  agregarJugada(data, posicion);
+
+    agregarJugada(data, posicion);
+
+
 
 }
 
 function llevardrop(idCarta) {
+
   var cont;
   var b = ($("#a").html());
   for (let i = 10000; i < 10022; i++) {
@@ -139,6 +141,7 @@ function llevardrop(idCarta) {
       //  console.log('Esta vacio');
       $('#' + idCarta).removeAttr('style');
       $('#espacio' + i).append(document.getElementById(idCarta));
+
       break;
     }
 
